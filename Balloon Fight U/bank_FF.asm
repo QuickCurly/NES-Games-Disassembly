@@ -1,5 +1,6 @@
 ; Disassembly created and organized using BZK 6502 Disassembler and LuaScripts by Cyneprepou4uk
 ; Comments and labels taken from original Balloon Fight (USA) NES Disassembly by LuigiBlood, built using ARM9's bass fork
+; Additional contributions made by Cyneprepou4uk
 ; v1.0 release: Tuesday, May 21, 2024 by Quick Curly
 ; Nothing provided is guaranteed to be 100% error-free. If something needs to be fixed, please contact the appropriate person/people to
 ; bring it to their attention, and/or feel free to contribute to make this disassembly more accurate and better. Thank you.
@@ -307,9 +308,9 @@ C - - - - - 0x000207 00:C1F7: 20 A5 F4  JSR sub_F4A5_Init_Fish
 C - - - - - 0x00020A 00:C1FA: A2 13     LDX #$13
 bra_C1FC:
 C - - - - - 0x00020C 00:C1FC: A9 FF     LDA #$FF                                                   ; Reset all lightning bolts
-C - - - - - 0x00020E 00:C1FE: 9D 30 05  STA ram_0530_bolt_animation_f,X                            ; Animation Frame = -1
+C - - - - - 0x00020E 00:C1FE: 9D 30 05  STA ram_0530_bolt_animation_f_01,X                         ; Animation Frame = -1
 C - - - - - 0x000211 00:C201: A9 F0     LDA #$F0
-C - - - - - 0x000213 00:C203: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X                              ; No vertical direction?
+C - - - - - 0x000213 00:C203: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X                           ; No vertical direction?
 C - - - - - 0x000216 00:C206: CA        DEX
 C - - - - - 0x000217 00:C207: 10 F3     BPL bra_C1FC
 loc_C209:
@@ -368,15 +369,15 @@ C - - - - - 0x00027D 00:C26D: CA        DEX                                     
 C - - - - - 0x00027E 00:C26E: 10 DF     BPL bra_C24F
 C - - - - - 0x000280 00:C270: A2 13     LDX #$13
 bra_C272:
-C - - - - - 0x000282 00:C272: BD 30 05  LDA ram_0530_bolt_animation_f,X                            ; If lightning bolt doesn't exist
+C - - - - - 0x000282 00:C272: BD 30 05  LDA ram_0530_bolt_animation_f_01,X                         ; If lightning bolt doesn't exist
 C - - - - - 0x000285 00:C275: 30 12     BMI bra_C289                                               ; then skip to next one
-C - - - - - 0x000287 00:C277: FE 90 04  INC ram_0490_bolt_x_pos_int,X                              ; Scroll bolt 1 pixel to the right
-C - - - - - 0x00028A 00:C27A: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000287 00:C277: FE 90 04  INC ram_0490_bolt_x_pos_int_01,X                           ; Scroll bolt 1 pixel to the right
+C - - - - - 0x00028A 00:C27A: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x00028D 00:C27D: C9 F8     CMP #$F8                                                   ; If bolt's X position
 C - - - - - 0x00028F 00:C27F: 90 08     BCC bra_C289                                               ; reaches #$F8
 C - - - - - 0x000291 00:C281: A9 F0     LDA #$F0                                                   ; then make it disappear
-C - - - - - 0x000293 00:C283: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
-C - - - - - 0x000296 00:C286: 9D 30 05  STA ram_0530_bolt_animation_f,X
+C - - - - - 0x000293 00:C283: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
+C - - - - - 0x000296 00:C286: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
 bra_C289:
 C - - - - - 0x000299 00:C289: CA        DEX                                                        ; Check next bolt
 C - - - - - 0x00029A 00:C28A: 10 E6     BPL bra_C272
@@ -438,12 +439,12 @@ C - - - - - 0x000302 00:C2F2: CA        DEX                                     
 C - - - - - 0x000303 00:C2F3: 10 DD     BPL bra_C2D2
 C - - - - - 0x000305 00:C2F5: A2 13     LDX #$13
 bra_C2F7:
-C - - - - - 0x000307 00:C2F7: BD 30 05  LDA ram_0530_bolt_animation_f,X                            ; If lightning bolt exists?
+C - - - - - 0x000307 00:C2F7: BD 30 05  LDA ram_0530_bolt_animation_f_01,X                         ; If lightning bolt exists?
 C - - - - - 0x00030A 00:C2FA: 30 1B     BMI bra_C317
 C - - - - - 0x00030C 00:C2FC: A5 C5     LDA ram_00C5_lock_scroll_time                              ; If scrolling is locked
 C - - - - - 0x00030E 00:C2FE: D0 14     BNE bra_C314
 C - - - - - 0x000310 00:C300: 20 B6 C9  JSR sub_C9B6_Bolt_Update                                   ; Update lightning bolt position
-C - - - - - 0x000313 00:C303: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000313 00:C303: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000316 00:C306: C9 02     CMP #$02                                                   ; If Y position < #$02
 C - - - - - 0x000318 00:C308: B0 03     BCS bra_C30D                                               ; then
 C - - - - - 0x00031A 00:C30A: 20 4F CA  JSR sub_CA4F                                               ; bounce lightning bolt vertically
@@ -472,13 +473,13 @@ C - - - - - 0x00033D 00:C32D: 0A        ASL
 C - - - - - 0x00033E 00:C32E: 0A        ASL                                                        ; Get OAM sprite address
 C - - - - - 0x00033F 00:C32F: A8        TAY
 C - - - - - 0x000340 00:C330: 68        PLA                                                        ; Update lightning bolt sprite
-C - - - - - 0x000341 00:C331: 99 B1 02  STA ram_02B1,Y                                             ; Tile ID
-C - - - - - 0x000344 00:C334: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
-C - - - - - 0x000347 00:C337: 99 B0 02  STA ram_02B0,Y                                             ; Y position
-C - - - - - 0x00034A 00:C33A: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
-C - - - - - 0x00034D 00:C33D: 99 B3 02  STA ram_02B3,Y                                             ; X position
+C - - - - - 0x000341 00:C331: 99 B1 02  STA ram_02B1_sprite_2C_tile,Y                              ; Tile ID
+C - - - - - 0x000344 00:C334: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
+C - - - - - 0x000347 00:C337: 99 B0 02  STA ram_02B0_sprite_2C_y,Y                                 ; Y position
+C - - - - - 0x00034A 00:C33A: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
+C - - - - - 0x00034D 00:C33D: 99 B3 02  STA ram_02B3_sprite_2C_x,Y                                 ; X position
 C - - - - - 0x000350 00:C340: A9 00     LDA #$00
-C - - - - - 0x000352 00:C342: 99 B2 02  STA ram_02B2,Y                                             ; Use palette 4
+C - - - - - 0x000352 00:C342: 99 B2 02  STA ram_02B2_sprite_2C_attributes,Y                        ; Use palette 4
 C - - - - - 0x000355 00:C345: CA        DEX                                                        ; Loop to next bolt
 C - - - - - 0x000356 00:C346: 10 AF     BPL bra_C2F7
 C - - - - - 0x000358 00:C348: AD CE 05  LDA ram_05CE_trip_balloons_counter                         ; If you touched
@@ -504,27 +505,27 @@ C - - - - - 0x000381 00:C371: AD 88 04  LDA ram_0488_trip_plat_start_x_pos      
 C - - - - - 0x000384 00:C374: F0 02     BEQ bra_C378                                               ; then don't make it appear on screen
 C - - - - - 0x000386 00:C376: A2 88     LDX #$88                                                   ; At Y position #$88:
 bra_C378:
-C - - - - - 0x000388 00:C378: 8E 00 02  STX ram_0200_oam_buffer                                    ; Display left and right
-C - - - - - 0x00038B 00:C37B: 8E 04 02  STX ram_0204                                               ; sides of platform
-C - - - - - 0x00038E 00:C37E: 8D 03 02  STA ram_0203
+C - - - - - 0x000388 00:C378: 8E 00 02  STX ram_0200_sprite_00_y                                   ; Display left and right
+C - - - - - 0x00038B 00:C37B: 8E 04 02  STX ram_0204_sprite_01_y                                   ; sides of platform
+C - - - - - 0x00038E 00:C37E: 8D 03 02  STA ram_0203_sprite_00_x
 C - - - - - 0x000391 00:C381: 18        CLC                                                        ; Display left and right
 C - - - - - 0x000392 00:C382: 69 08     ADC #$08                                                   ; sides at current X position
-C - - - - - 0x000394 00:C384: 8D 07 02  STA ram_0207
+C - - - - - 0x000394 00:C384: 8D 07 02  STA ram_0207_sprite_01_x
 C - - - - - 0x000397 00:C387: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x000399 00:C389: 29 03     AND #$03                                                   ; Switch between palettes
-C - - - - - 0x00039B 00:C38B: 8D 02 02  STA ram_0202                                               ; on platform
-C - - - - - 0x00039E 00:C38E: 8D 06 02  STA ram_0206
+C - - - - - 0x00039B 00:C38B: 8D 02 02  STA ram_0202_sprite_00_attributes                          ; on platform
+C - - - - - 0x00039E 00:C38E: 8D 06 02  STA ram_0206_sprite_01_attributes
 C - - - - - 0x0003A1 00:C391: A2 E3     LDX #$E3
-C - - - - - 0x0003A3 00:C393: 8E 01 02  STX ram_0201                                               ; Display Tile #$E3 and #$E4
+C - - - - - 0x0003A3 00:C393: 8E 01 02  STX ram_0201_sprite_00_tile                                ; Display Tile #$E3 and #$E4
 C - - - - - 0x0003A6 00:C396: E8        INX
-C - - - - - 0x0003A7 00:C397: 8E 05 02  STX ram_0205
+C - - - - - 0x0003A7 00:C397: 8E 05 02  STX ram_0205_sprite_01_tile
 C - - - - - 0x0003AA 00:C39A: A5 88     LDA ram_0088_object_balloons_p1                            ; If Player is dead (no balloons)
 C - - - - - 0x0003AC 00:C39C: 30 03     BMI bra_C3A1                                               ; then game over
 C - - - - - 0x0003AE 00:C39E: 4C 09 C2  JMP loc_C209                                               ; else game loop
 bra_C3A1:
 C - - - - - 0x0003B1 00:C3A1: 20 79 C5  JSR sub_C579_Rank_Score_Update
-C - - - - - 0x0003B4 00:C3A4: A9 01     LDA #$01                                                   ; Play SFX
-C - - - - - 0x0003B6 00:C3A6: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x0003B4 00:C3A4: A9 01     LDA #$01                                                   ; \ Stop All Sounds
+C - - - - - 0x0003B6 00:C3A6: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x0003B8 00:C3A8: 20 65 F4  JSR sub_F465_Clear_F_Flag                                  ; Clear Frame Flag
 C - - - - - 0x0003BB 00:C3AB: A9 02     LDA #$02                                                   ; Play Stage Clear Jingle
 C - - - - - 0x0003BD 00:C3AD: 85 F2     STA ram_00F2_music_jingle
@@ -632,7 +633,7 @@ ofs_C45F:
 C - - J - - 0x00046F 00:C45F: 20 0C C4  JSR sub_C40C                                               ; Randomly spawn lightning bolt
 C - - - - - 0x000472 00:C462: 20 B3 F1  JSR sub_F1B3_RNG
 C - - - - - 0x000475 00:C465: 29 7F     AND #$7F                                                   ; Set X velocity (Frac)
-C - - - - - 0x000477 00:C467: 9D 08 05  STA ram_0508_bolt_x_vel_frac,X                             ; RNG up to 127
+C - - - - - 0x000477 00:C467: 9D 08 05  STA ram_0508_bolt_x_vel_frac_01,X                          ; RNG up to 127
 C - - - - - 0x00047A 00:C46A: 60        RTS
 sub_C46B:
 C - - - - - 0x00047B 00:C46B: A2 07     LDX #$07
@@ -653,22 +654,22 @@ C - - - - - 0x000495 00:C485: 60        RTS
 sub_C486:
 C - - - - - 0x000496 00:C486: A2 13     LDX #$13
 bra_C488:
-C - - - - - 0x000498 00:C488: BD 30 05  LDA ram_0530_bolt_animation_f,X                            ; Find lightning bolt
+C - - - - - 0x000498 00:C488: BD 30 05  LDA ram_0530_bolt_animation_f_01,X                         ; Find lightning bolt
 C - - - - - 0x00049B 00:C48B: 30 04     BMI bra_C491                                               ; that hasn't spawned yet
 C - - - - - 0x00049D 00:C48D: CA        DEX
 C - - - - - 0x00049E 00:C48E: 10 F8     BPL bra_C488
 C - - - - - 0x0004A0 00:C490: 60        RTS
 bra_C491:
 C - - - - - 0x0004A1 00:C491: A9 00     LDA #$00
-C - - - - - 0x0004A3 00:C493: 9D 30 05  STA ram_0530_bolt_animation_f,X                            ; Set animation frame to 00
-C - - - - - 0x0004A6 00:C496: 9D 90 04  STA ram_0490_bolt_x_pos_int,X                              ; Set X position to 00
-C - - - - - 0x0004A9 00:C499: 9D F4 04  STA ram_04F4_bolt_y_vel_int,X                              ; Set Y velocity to 00
-C - - - - - 0x0004AC 00:C49C: 9D 08 05  STA ram_0508_bolt_x_vel_frac,X                             ; Set X velocity to 00 (Int and Frac)
-C - - - - - 0x0004AF 00:C49F: 9D E0 04  STA ram_04E0_bolt_x_vel_int,X
+C - - - - - 0x0004A3 00:C493: 9D 30 05  STA ram_0530_bolt_animation_f_01,X                         ; Set animation frame to 00
+C - - - - - 0x0004A6 00:C496: 9D 90 04  STA ram_0490_bolt_x_pos_int_01,X                           ; Set X position to 00
+C - - - - - 0x0004A9 00:C499: 9D F4 04  STA ram_04F4_bolt_y_vel_int_01,X                           ; Set Y velocity to 00
+C - - - - - 0x0004AC 00:C49C: 9D 08 05  STA ram_0508_bolt_x_vel_frac_01,X                          ; Set X velocity to 00 (Int and Frac)
+C - - - - - 0x0004AF 00:C49F: 9D E0 04  STA ram_04E0_bolt_x_vel_int_01,X
 C - - - - - 0x0004B2 00:C4A2: A5 14     LDA ram_0014_temp                                          ; Set Y velocity (Frac) to [$14]
-C - - - - - 0x0004B4 00:C4A4: 9D 1C 05  STA ram_051C_bolt_y_vel_frac,X
+C - - - - - 0x0004B4 00:C4A4: 9D 1C 05  STA ram_051C_bolt_y_vel_frac_01,X
 C - - - - - 0x0004B7 00:C4A7: A5 15     LDA ram_0015_temp_player_x_trip_rank_score                 ; Set Y position to [$15]
-C - - - - - 0x0004B9 00:C4A9: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x0004B9 00:C4A9: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x0004BC 00:C4AC: 60        RTS
 tbl_C4AD_Trip_Premade_Layout:
 - D 2 - I - 0x0004BD 00:C4AD: 00        .byte $00   ; 
@@ -961,7 +962,7 @@ C - - - - - 0x00063C 00:C62C: 10 ED     BPL bra_C61B
 C - - - - - 0x00063E 00:C62E: 60        RTS
 bra_C62F:
 C - - - - - 0x00063F 00:C62F: 8E 8B 04  STX ram_048B_fish_target_id                                ; Update Target
-C - - - - - 0x000642 00:C632: BD 48 04  LDA ram_0448_direction,X                                   ; Update Fish Direction
+C - - - - - 0x000642 00:C632: BD 48 04  LDA ram_0448_direction_p1,X                                ; Update Fish Direction
 C - - - - - 0x000645 00:C635: 8D 50 04  STA ram_0450_direction_fish                                ; with Target Object's Direction
 C - - - - - 0x000648 00:C638: A9 00     LDA #$00
 C - - - - - 0x00064A 00:C63A: 8D 8A 04  STA ram_048A_fish_animation                                ; Reset Fish Animation?
@@ -1006,9 +1007,9 @@ C - - - - - 0x000694 00:C684: 18        CLC                                     
 C - - - - - 0x000695 00:C685: 69 10     ADC #$10                                                   ; the fish by 10 pixels
 C - - - - - 0x000697 00:C687: C5 A2     CMP ram_00A2_object_y_pos_int_fish
 C - - - - - 0x000699 00:C689: 90 18     BCC bra_C6A3
-C - - - - - 0x00069B 00:C68B: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x00069B 00:C68B: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x00069E 00:C68E: B9 B8 C6  LDA tbl_C6B8_Target_Object_Type,Y                          ; Change Target Object Type
-C - - - - - 0x0006A1 00:C691: 9D 51 04  STA ram_0451_object_type,X
+C - - - - - 0x0006A1 00:C691: 9D 51 04  STA ram_0451_object_type_p1,X
 C - - - - - 0x0006A4 00:C694: A9 00     LDA #$00                                                   ; Insta Kill
 C - - - - - 0x0006A6 00:C696: 95 7F     STA ram_007F_object_status_p1,X                            ; Target Object Status = 00
 C - - - - - 0x0006A8 00:C698: 95 88     STA ram_0088_object_balloons_p1,X                          ; Target Object Balloons == 0
@@ -1066,7 +1067,7 @@ C - - - - - 0x0006FC 00:C6EC: D0 0A     BNE bra_C6F8_RTS
 bra_C6EE:
 C - - - - - 0x0006FE 00:C6EE: B5 91     LDA ram_0091_object_x_pos_int_p1,X                         ; Teleport Fish
 C - - - - - 0x000700 00:C6F0: 85 99     STA ram_0099_object_x_pos_int_fish                         ; to Object's X position
-C - - - - - 0x000702 00:C6F2: BD 48 04  LDA ram_0448_direction,X                                   ; Change Fish Direction
+C - - - - - 0x000702 00:C6F2: BD 48 04  LDA ram_0448_direction_p1,X                                ; Change Fish Direction
 C - - - - - 0x000705 00:C6F5: 8D 50 04  STA ram_0450_direction_fish                                ; to Object's Direction
 bra_C6F8_RTS:
 C - - - - - 0x000708 00:C6F8: 60        RTS
@@ -1089,8 +1090,8 @@ sub_C716_Init_Cloud_Bolt:
 C - - - - - 0x000726 00:C716: A2 01     LDX #$01
 bra_C718:
 C - - - - - 0x000728 00:C718: A9 FF     LDA #$FF                                                   ; Reset 2 Lightning Bolts
-C - - - - - 0x00072A 00:C71A: 9D 30 05  STA ram_0530_bolt_animation_f,X
-C - - - - - 0x00072D 00:C71D: 9D 44 05  STA ram_0544_lightning_bolt,X
+C - - - - - 0x00072A 00:C71A: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
+C - - - - - 0x00072D 00:C71D: 9D 44 05  STA ram_0544_lightning_bolt_01,X
 C - - - - - 0x000730 00:C720: CA        DEX
 C - - - - - 0x000731 00:C721: 10 F5     BPL bra_C718
 C - - - - - 0x000733 00:C723: 20 7A C7  JSR sub_C77A_Cloud_Bolt_Select                             ; Select Cloud that sends the bolt?
@@ -1105,9 +1106,9 @@ C - - - - - 0x000741 00:C731: 85 BA     STA ram_00BA_bolt_intensity_speed
 C - - - - - 0x000743 00:C733: BD 61 C7  LDA tbl_C761_Bolt_Countdown,X                              ; Change Lightning Bolt Countdown
 C - - - - - 0x000746 00:C736: 85 B8     STA ram_00B8_bolt_countdown                                ; Depending on Current Phase
 C - - - - - 0x000748 00:C738: A9 F0     LDA #$F0
-C - - - - - 0x00074A 00:C73A: 8D E0 02  STA ram_02E0                                               ; Hide last 3 sprites
-C - - - - - 0x00074D 00:C73D: 8D E4 02  STA ram_02E4
-C - - - - - 0x000750 00:C740: 8D E8 02  STA ram_02E8
+C - - - - - 0x00074A 00:C73A: 8D E0 02  STA ram_02E0_sprite_38_y                                   ; Hide last 3 sprites
+C - - - - - 0x00074D 00:C73D: 8D E4 02  STA ram_02E4_sprite_39_y
+C - - - - - 0x000750 00:C740: 8D E8 02  STA ram_02E8_sprite_3A_y
 C - - - - - 0x000753 00:C743: A9 03     LDA #$03
 C - - - - - 0x000755 00:C745: 4C 56 C8  JMP loc_C856                                               ; Blink selected cloud
 tbl_C748_Bolt_Intensity:
@@ -1189,10 +1190,10 @@ bra_C797:
 C - - - - - 0x0007A7 00:C797: C6 B8     DEC ram_00B8_bolt_countdown                                ; Do Lightning Bolt Countdown
 C - - - - - 0x0007A9 00:C799: D0 FB     BNE bra_C796_RTS                                           ; ...once it reaches zero...
 C - - - - - 0x0007AB 00:C79B: A2 00     LDX #$00
-C - - - - - 0x0007AD 00:C79D: BD 30 05  LDA ram_0530_bolt_animation_f,X
+C - - - - - 0x0007AD 00:C79D: BD 30 05  LDA ram_0530_bolt_animation_f_01,X
 C - - - - - 0x0007B0 00:C7A0: 30 0B     BMI bra_C7AD
 C - - - - - 0x0007B2 00:C7A2: E8        INX
-C - - - - - 0x0007B3 00:C7A3: BD 30 05  LDA ram_0530_bolt_animation_f,X
+C - - - - - 0x0007B3 00:C7A3: BD 30 05  LDA ram_0530_bolt_animation_f_01,X
 C - - - - - 0x0007B6 00:C7A6: 30 05     BMI bra_C7AD
 - - - - - - 0x0007B8 00:C7A8: A9 01     LDA #$01
 - - - - - - 0x0007BA 00:C7AA: 85 B8     STA ram_00B8_bolt_countdown
@@ -1204,37 +1205,37 @@ C - - - - - 0x0007C1 00:C7B1: 10 01     BPL bra_C7B4
 - - - - - - 0x0007C3 00:C7B3: 60        RTS
 bra_C7B4:
 C - - - - - 0x0007C4 00:C7B4: A9 80     LDA #$80
-C - - - - - 0x0007C6 00:C7B6: 9D B8 04  STA ram_04B8_bolt_x_pos_frac,X
-C - - - - - 0x0007C9 00:C7B9: 9D CC 04  STA ram_04CC_bolt_y_pos_frac,X
+C - - - - - 0x0007C6 00:C7B6: 9D B8 04  STA ram_04B8_bolt_x_pos_frac_01,X
+C - - - - - 0x0007C9 00:C7B9: 9D CC 04  STA ram_04CC_bolt_y_pos_frac_01,X
 C - - - - - 0x0007CC 00:C7BC: A9 00     LDA #$00
-C - - - - - 0x0007CE 00:C7BE: 9D 30 05  STA ram_0530_bolt_animation_f,X
+C - - - - - 0x0007CE 00:C7BE: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
 C - - - - - 0x0007D1 00:C7C1: B9 B2 00  LDA ram_00B2_cloud_related,Y
-C - - - - - 0x0007D4 00:C7C4: 9D 90 04  STA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x0007D4 00:C7C4: 9D 90 04  STA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x0007D7 00:C7C7: B9 B5 00  LDA ram_00B5_cloud_related,Y
-C - - - - - 0x0007DA 00:C7CA: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x0007DA 00:C7CA: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x0007DD 00:C7CD: A4 BA     LDY ram_00BA_bolt_intensity_speed
 C - - - - - 0x0007DF 00:C7CF: 20 B3 F1  JSR sub_F1B3_RNG
 C - - - - - 0x0007E2 00:C7D2: 29 1F     AND #$1F
 C - - - - - 0x0007E4 00:C7D4: 79 9F C8  ADC tbl_C89F,Y
-C - - - - - 0x0007E7 00:C7D7: 9D 08 05  STA ram_0508_bolt_x_vel_frac,X
+C - - - - - 0x0007E7 00:C7D7: 9D 08 05  STA ram_0508_bolt_x_vel_frac_01,X
 C - - - - - 0x0007EA 00:C7DA: B9 AB C8  LDA tbl_C8AB,Y
-C - - - - - 0x0007ED 00:C7DD: 9D 1C 05  STA ram_051C_bolt_y_vel_frac,X
+C - - - - - 0x0007ED 00:C7DD: 9D 1C 05  STA ram_051C_bolt_y_vel_frac_01,X
 C - - - - - 0x0007F0 00:C7E0: B9 A5 C8  LDA tbl_C8A5,Y
-C - - - - - 0x0007F3 00:C7E3: 9D E0 04  STA ram_04E0_bolt_x_vel_int,X
+C - - - - - 0x0007F3 00:C7E3: 9D E0 04  STA ram_04E0_bolt_x_vel_int_01,X
 C - - - - - 0x0007F6 00:C7E6: B9 B1 C8  LDA tbl_C8B1,Y
-C - - - - - 0x0007F9 00:C7E9: 9D F4 04  STA ram_04F4_bolt_y_vel_int,X
+C - - - - - 0x0007F9 00:C7E9: 9D F4 04  STA ram_04F4_bolt_y_vel_int_01,X
 C - - - - - 0x0007FC 00:C7EC: 20 B3 F1  JSR sub_F1B3_RNG
 C - - - - - 0x0007FF 00:C7EF: 29 03     AND #$03
-C - - - - - 0x000801 00:C7F1: 9D 44 05  STA ram_0544_lightning_bolt,X
+C - - - - - 0x000801 00:C7F1: 9D 44 05  STA ram_0544_lightning_bolt_01,X
 C - - - - - 0x000804 00:C7F4: A8        TAY
 C - - - - - 0x000805 00:C7F5: B9 97 C8  LDA tbl_C897,Y
 C - - - - - 0x000808 00:C7F8: 18        CLC
-C - - - - - 0x000809 00:C7F9: 7D 90 04  ADC ram_0490_bolt_x_pos_int,X
-C - - - - - 0x00080C 00:C7FC: 9D 90 04  STA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000809 00:C7F9: 7D 90 04  ADC ram_0490_bolt_x_pos_int_01,X
+C - - - - - 0x00080C 00:C7FC: 9D 90 04  STA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x00080F 00:C7FF: B9 9B C8  LDA tbl_C89B,Y
 C - - - - - 0x000812 00:C802: 18        CLC
-C - - - - - 0x000813 00:C803: 7D A4 04  ADC ram_04A4_bolt_y_pos_int,X
-C - - - - - 0x000816 00:C806: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000813 00:C803: 7D A4 04  ADC ram_04A4_bolt_y_pos_int_01,X
+C - - - - - 0x000816 00:C806: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000819 00:C809: B9 8F C8  LDA tbl_C88F,Y
 C - - - - - 0x00081C 00:C80C: F0 03     BEQ bra_C811
 C - - - - - 0x00081E 00:C80E: 20 3D CA  JSR sub_CA3D
@@ -1253,16 +1254,16 @@ C - - - - - 0x000833 00:C823: 38        SEC
 C - - - - - 0x000834 00:C824: E5 BA     SBC ram_00BA_bolt_intensity_speed
 C - - - - - 0x000836 00:C826: 85 B8     STA ram_00B8_bolt_countdown
 C - - - - - 0x000838 00:C828: A5 F0     LDA ram_00F0_sfx_1
-C - - - - - 0x00083A 00:C82A: 09 04     ORA #$04
+C - - - - - 0x00083A 00:C82A: 09 04     ORA #$04                                                   ; Play Lightning Bolt Sound
 C - - - - - 0x00083C 00:C82C: 85 F0     STA ram_00F0_sfx_1
 C - - - - - 0x00083E 00:C82E: 4C 7A C7  JMP loc_C77A_Cloud_Bolt_Select
 sub_C831_Cloud_Blink:
 C - - - - - 0x000841 00:C831: A5 B8     LDA ram_00B8_bolt_countdown                                ; If Lightning Bolt Countdown != 1
 C - - - - - 0x000843 00:C833: C9 01     CMP #$01                                                   ; then return
 C - - - - - 0x000845 00:C835: D0 53     BNE bra_C88A_RTS
-C - - - - - 0x000847 00:C837: AD 30 05  LDA ram_0530_bolt_animation_f                              ; If Lightning Bolt 0 doesn't exist
+C - - - - - 0x000847 00:C837: AD 30 05  LDA ram_0530_bolt_animation_f_01                           ; If Lightning Bolt 0 doesn't exist
 C - - - - - 0x00084A 00:C83A: 30 0A     BMI bra_C846                                               ; then prepare for one
-C - - - - - 0x00084C 00:C83C: AD 31 05  LDA ram_0531                                               ; If Lightning Bolt 1 doesn't exist
+C - - - - - 0x00084C 00:C83C: AD 31 05  LDA ram_0531_bolt_animation_f_02                           ; If Lightning Bolt 1 doesn't exist
 C - - - - - 0x00084F 00:C83F: 30 05     BMI bra_C846                                               ; then prepare for one
 C - - - - - 0x000851 00:C841: A9 02     LDA #$02                                                   ; Else up the countdown to 2
 C - - - - - 0x000853 00:C843: 85 B8     STA ram_00B8_bolt_countdown
@@ -1362,11 +1363,11 @@ tbl_C8B1:
 sub_C8B7:
 C - - - - - 0x0008C7 00:C8B7: A2 01     LDX #$01
 loc_C8B9:
-C D 2 - - - 0x0008C9 00:C8B9: BD 30 05  LDA ram_0530_bolt_animation_f,X
+C D 2 - - - 0x0008C9 00:C8B9: BD 30 05  LDA ram_0530_bolt_animation_f_01,X
 C - - - - - 0x0008CC 00:C8BC: 10 03     BPL bra_C8C1
 C - - - - - 0x0008CE 00:C8BE: 4C AF C9  JMP loc_C9AF
 bra_C8C1:
-C - - - - - 0x0008D1 00:C8C1: BD 44 05  LDA ram_0544_lightning_bolt,X
+C - - - - - 0x0008D1 00:C8C1: BD 44 05  LDA ram_0544_lightning_bolt_01,X
 C - - - - - 0x0008D4 00:C8C4: 30 7B     BMI bra_C941
 C - - - - - 0x0008D6 00:C8C6: A8        TAY
 C - - - - - 0x0008D7 00:C8C7: 8A        TXA
@@ -1374,16 +1375,16 @@ C - - - - - 0x0008D8 00:C8C8: 48        PHA
 C - - - - - 0x0008D9 00:C8C9: A6 A5     LDX ram_00A5_cloud_id_lightning
 C - - - - - 0x0008DB 00:C8CB: B5 B2     LDA ram_00B2_cloud_related,X
 C - - - - - 0x0008DD 00:C8CD: 79 E5 C9  ADC tbl_C9E5,Y
-C - - - - - 0x0008E0 00:C8D0: 8D E3 02  STA ram_02E3
-C - - - - - 0x0008E3 00:C8D3: 8D E7 02  STA ram_02E7
-C - - - - - 0x0008E6 00:C8D6: 8D EB 02  STA ram_02EB
+C - - - - - 0x0008E0 00:C8D0: 8D E3 02  STA ram_02E3_sprite_38_x
+C - - - - - 0x0008E3 00:C8D3: 8D E7 02  STA ram_02E7_sprite_39_x
+C - - - - - 0x0008E6 00:C8D6: 8D EB 02  STA ram_02EB_sprite_3A_x
 C - - - - - 0x0008E9 00:C8D9: B5 B5     LDA ram_00B5_cloud_related,X
 C - - - - - 0x0008EB 00:C8DB: 79 F5 C9  ADC tbl_C9F5,Y
-C - - - - - 0x0008EE 00:C8DE: 8D E0 02  STA ram_02E0
+C - - - - - 0x0008EE 00:C8DE: 8D E0 02  STA ram_02E0_sprite_38_y
 C - - - - - 0x0008F1 00:C8E1: 79 05 CA  ADC tbl_CA05,Y
-C - - - - - 0x0008F4 00:C8E4: 8D E4 02  STA ram_02E4
+C - - - - - 0x0008F4 00:C8E4: 8D E4 02  STA ram_02E4_sprite_39_y
 C - - - - - 0x0008F7 00:C8E7: 79 05 CA  ADC tbl_CA05,Y
-C - - - - - 0x0008FA 00:C8EA: 8D E8 02  STA ram_02E8
+C - - - - - 0x0008FA 00:C8EA: 8D E8 02  STA ram_02E8_sprite_3A_y
 C - - - - - 0x0008FD 00:C8ED: 98        TYA
 C - - - - - 0x0008FE 00:C8EE: 29 03     AND #$03
 C - - - - - 0x000900 00:C8F0: AA        TAX
@@ -1400,67 +1401,67 @@ C - - - - - 0x00090C 00:C8FC: 69 05     ADC #$05
 C - - - - - 0x00090E 00:C8FE: A8        TAY
 bra_C8FF:
 C - - - - - 0x00090F 00:C8FF: B9 15 CA  LDA tbl_CA15,Y
-C - - - - - 0x000912 00:C902: 8D E1 02  STA ram_02E1
+C - - - - - 0x000912 00:C902: 8D E1 02  STA ram_02E1_sprite_38_tile
 C - - - - - 0x000915 00:C905: B9 1F CA  LDA tbl_CA1F,Y
-C - - - - - 0x000918 00:C908: 8D E5 02  STA ram_02E5
+C - - - - - 0x000918 00:C908: 8D E5 02  STA ram_02E5_sprite_39_tile
 C - - - - - 0x00091B 00:C90B: B9 29 CA  LDA tbl_CA29,Y
-C - - - - - 0x00091E 00:C90E: 8D E9 02  STA ram_02E9
+C - - - - - 0x00091E 00:C90E: 8D E9 02  STA ram_02E9_sprite_3A_tile
 C - - - - - 0x000921 00:C911: BD 33 CA  LDA tbl_CA33,X
-C - - - - - 0x000924 00:C914: 8D E2 02  STA ram_02E2
-C - - - - - 0x000927 00:C917: 8D E6 02  STA ram_02E6
-C - - - - - 0x00092A 00:C91A: 8D EA 02  STA ram_02EA
+C - - - - - 0x000924 00:C914: 8D E2 02  STA ram_02E2_sprite_38_attributes
+C - - - - - 0x000927 00:C917: 8D E6 02  STA ram_02E6_sprite_39_attributes
+C - - - - - 0x00092A 00:C91A: 8D EA 02  STA ram_02EA_sprite_3A_attributes
 C - - - - - 0x00092D 00:C91D: 68        PLA
 C - - - - - 0x00092E 00:C91E: AA        TAX
 C - - - - - 0x00092F 00:C91F: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x000931 00:C921: 29 07     AND #$07
 C - - - - - 0x000933 00:C923: D0 12     BNE bra_C937
-C - - - - - 0x000935 00:C925: BD 44 05  LDA ram_0544_lightning_bolt,X
+C - - - - - 0x000935 00:C925: BD 44 05  LDA ram_0544_lightning_bolt_01,X
 C - - - - - 0x000938 00:C928: 18        CLC
 C - - - - - 0x000939 00:C929: 69 04     ADC #$04
-C - - - - - 0x00093B 00:C92B: 9D 44 05  STA ram_0544_lightning_bolt,X
+C - - - - - 0x00093B 00:C92B: 9D 44 05  STA ram_0544_lightning_bolt_01,X
 C - - - - - 0x00093E 00:C92E: C9 14     CMP #$14
 C - - - - - 0x000940 00:C930: 90 05     BCC bra_C937
 C - - - - - 0x000942 00:C932: A9 FF     LDA #$FF
-C - - - - - 0x000944 00:C934: 9D 44 05  STA ram_0544_lightning_bolt,X
+C - - - - - 0x000944 00:C934: 9D 44 05  STA ram_0544_lightning_bolt_01,X
 bra_C937:
-C - - - - - 0x000947 00:C937: BD 44 05  LDA ram_0544_lightning_bolt,X
+C - - - - - 0x000947 00:C937: BD 44 05  LDA ram_0544_lightning_bolt_01,X
 C - - - - - 0x00094A 00:C93A: C9 10     CMP #$10
 C - - - - - 0x00094C 00:C93C: B0 03     BCS bra_C941
 C - - - - - 0x00094E 00:C93E: 4C AF C9  JMP loc_C9AF
 bra_C941:
 C - - - - - 0x000951 00:C941: 20 B6 C9  JSR sub_C9B6_Bolt_Update
-C - - - - - 0x000954 00:C944: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000954 00:C944: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000957 00:C947: C9 02     CMP #$02
 C - - - - - 0x000959 00:C949: B0 03     BCS bra_C94E
 C - - - - - 0x00095B 00:C94B: 20 37 CA  JSR sub_CA37
 bra_C94E:
-C - - - - - 0x00095E 00:C94E: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x00095E 00:C94E: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000961 00:C951: C9 F7     CMP #$F7
 C - - - - - 0x000963 00:C953: 90 03     BCC bra_C958
 C - - - - - 0x000965 00:C955: 20 37 CA  JSR sub_CA37
 bra_C958:
-C - - - - - 0x000968 00:C958: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000968 00:C958: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x00096B 00:C95B: C9 02     CMP #$02
 C - - - - - 0x00096D 00:C95D: B0 03     BCS bra_C962
 C - - - - - 0x00096F 00:C95F: 20 4F CA  JSR sub_CA4F
 bra_C962:
-C - - - - - 0x000972 00:C962: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000972 00:C962: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000975 00:C965: C9 E0     CMP #$E0
 C - - - - - 0x000977 00:C967: 90 0D     BCC bra_C976
 C - - - - - 0x000979 00:C969: A9 FF     LDA #$FF
-C - - - - - 0x00097B 00:C96B: 9D 30 05  STA ram_0530_bolt_animation_f,X
+C - - - - - 0x00097B 00:C96B: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
 C - - - - - 0x00097E 00:C96E: A9 F0     LDA #$F0
-C - - - - - 0x000980 00:C970: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000980 00:C970: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000983 00:C973: 4C AF C9  JMP loc_C9AF
 bra_C976:
 C - - - - - 0x000986 00:C976: 20 67 CA  JSR sub_CA67
 C - - - - - 0x000989 00:C979: 20 1C CB  JSR sub_CB1C_Bolt_Player_Collision
-C - - - - - 0x00098C 00:C97C: BC 30 05  LDY ram_0530_bolt_animation_f,X
+C - - - - - 0x00098C 00:C97C: BC 30 05  LDY ram_0530_bolt_animation_f_01,X
 C - - - - - 0x00098F 00:C97F: C8        INY
 C - - - - - 0x000990 00:C980: 98        TYA
 C - - - - - 0x000991 00:C981: 29 07     AND #$07
-C - - - - - 0x000993 00:C983: 9D 30 05  STA ram_0530_bolt_animation_f,X
-C - - - - - 0x000996 00:C986: BC 30 05  LDY ram_0530_bolt_animation_f,X
+C - - - - - 0x000993 00:C983: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
+C - - - - - 0x000996 00:C986: BC 30 05  LDY ram_0530_bolt_animation_f_01,X
 C - - - - - 0x000999 00:C989: B9 DD C9  LDA tbl_C9DD,Y
 C - - - - - 0x00099C 00:C98C: 85 12     STA ram_0012_temp
 C - - - - - 0x00099E 00:C98E: 8A        TXA
@@ -1468,18 +1469,18 @@ C - - - - - 0x00099F 00:C98F: 0A        ASL
 C - - - - - 0x0009A0 00:C990: 0A        ASL
 C - - - - - 0x0009A1 00:C991: 18        CLC
 C - - - - - 0x0009A2 00:C992: A8        TAY
-C - - - - - 0x0009A3 00:C993: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x0009A3 00:C993: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x0009A6 00:C996: C9 D0     CMP #$D0
-C - - - - - 0x0009A8 00:C998: 99 00 02  STA ram_0200_oam_buffer,Y
-C - - - - - 0x0009AB 00:C99B: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
-C - - - - - 0x0009AE 00:C99E: 99 03 02  STA ram_0203,Y
+C - - - - - 0x0009A8 00:C998: 99 00 02  STA ram_0200_sprite_00_y,Y
+C - - - - - 0x0009AB 00:C99B: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
+C - - - - - 0x0009AE 00:C99E: 99 03 02  STA ram_0203_sprite_00_x,Y
 C - - - - - 0x0009B1 00:C9A1: A5 12     LDA ram_0012_temp
-C - - - - - 0x0009B3 00:C9A3: 99 01 02  STA ram_0201,Y
+C - - - - - 0x0009B3 00:C9A3: 99 01 02  STA ram_0201_sprite_00_tile,Y
 C - - - - - 0x0009B6 00:C9A6: A9 00     LDA #$00
 C - - - - - 0x0009B8 00:C9A8: 90 02     BCC bra_C9AC
 C - - - - - 0x0009BA 00:C9AA: A9 20     LDA #$20
 bra_C9AC:
-C - - - - - 0x0009BC 00:C9AC: 99 02 02  STA ram_0202,Y
+C - - - - - 0x0009BC 00:C9AC: 99 02 02  STA ram_0202_sprite_00_attributes,Y
 loc_C9AF:
 C D 2 - - - 0x0009BF 00:C9AF: CA        DEX
 C - - - - - 0x0009C0 00:C9B0: 30 03     BMI bra_C9B5_RTS
@@ -1487,20 +1488,20 @@ C - - - - - 0x0009C2 00:C9B2: 4C B9 C8  JMP loc_C8B9
 bra_C9B5_RTS:
 C - - - - - 0x0009C5 00:C9B5: 60        RTS
 sub_C9B6_Bolt_Update:
-C - - - - - 0x0009C6 00:C9B6: BD 08 05  LDA ram_0508_bolt_x_vel_frac,X
+C - - - - - 0x0009C6 00:C9B6: BD 08 05  LDA ram_0508_bolt_x_vel_frac_01,X
 C - - - - - 0x0009C9 00:C9B9: 18        CLC                                                        ; Update X Position (Frac)
-C - - - - - 0x0009CA 00:C9BA: 7D B8 04  ADC ram_04B8_bolt_x_pos_frac,X
-C - - - - - 0x0009CD 00:C9BD: 9D B8 04  STA ram_04B8_bolt_x_pos_frac,X
-C - - - - - 0x0009D0 00:C9C0: BD E0 04  LDA ram_04E0_bolt_x_vel_int,X
-C - - - - - 0x0009D3 00:C9C3: 7D 90 04  ADC ram_0490_bolt_x_pos_int,X                              ; Update X Position (Int)
-C - - - - - 0x0009D6 00:C9C6: 9D 90 04  STA ram_0490_bolt_x_pos_int,X
-C - - - - - 0x0009D9 00:C9C9: BD 1C 05  LDA ram_051C_bolt_y_vel_frac,X
+C - - - - - 0x0009CA 00:C9BA: 7D B8 04  ADC ram_04B8_bolt_x_pos_frac_01,X
+C - - - - - 0x0009CD 00:C9BD: 9D B8 04  STA ram_04B8_bolt_x_pos_frac_01,X
+C - - - - - 0x0009D0 00:C9C0: BD E0 04  LDA ram_04E0_bolt_x_vel_int_01,X
+C - - - - - 0x0009D3 00:C9C3: 7D 90 04  ADC ram_0490_bolt_x_pos_int_01,X                           ; Update X Position (Int)
+C - - - - - 0x0009D6 00:C9C6: 9D 90 04  STA ram_0490_bolt_x_pos_int_01,X
+C - - - - - 0x0009D9 00:C9C9: BD 1C 05  LDA ram_051C_bolt_y_vel_frac_01,X
 C - - - - - 0x0009DC 00:C9CC: 18        CLC                                                        ; Update Y Position (Frac)
-C - - - - - 0x0009DD 00:C9CD: 7D CC 04  ADC ram_04CC_bolt_y_pos_frac,X
-C - - - - - 0x0009E0 00:C9D0: 9D CC 04  STA ram_04CC_bolt_y_pos_frac,X
-C - - - - - 0x0009E3 00:C9D3: BD F4 04  LDA ram_04F4_bolt_y_vel_int,X
-C - - - - - 0x0009E6 00:C9D6: 7D A4 04  ADC ram_04A4_bolt_y_pos_int,X                              ; Update Y Position (Int)
-C - - - - - 0x0009E9 00:C9D9: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x0009DD 00:C9CD: 7D CC 04  ADC ram_04CC_bolt_y_pos_frac_01,X
+C - - - - - 0x0009E0 00:C9D0: 9D CC 04  STA ram_04CC_bolt_y_pos_frac_01,X
+C - - - - - 0x0009E3 00:C9D3: BD F4 04  LDA ram_04F4_bolt_y_vel_int_01,X
+C - - - - - 0x0009E6 00:C9D6: 7D A4 04  ADC ram_04A4_bolt_y_pos_int_01,X                           ; Update Y Position (Int)
+C - - - - - 0x0009E9 00:C9D9: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x0009EC 00:C9DC: 60        RTS
 tbl_C9DD:
 - D 2 - - - 0x0009ED 00:C9DD: 9D        .byte $9D   ; 
@@ -1602,29 +1603,29 @@ tbl_CA33:
 - D 2 - - - 0x000A46 00:CA36: 80        .byte $80   ; 
 sub_CA37:
 C - - - - - 0x000A47 00:CA37: A5 F3     LDA ram_00F3_sfx_3
-C - - - - - 0x000A49 00:CA39: 09 80     ORA #$80                                                   ; Play SFX
+C - - - - - 0x000A49 00:CA39: 09 80     ORA #$80                                                   ; Play Bolt Bounce SFX
 C - - - - - 0x000A4B 00:CA3B: 85 F3     STA ram_00F3_sfx_3
 sub_CA3D:
 C - - - - - 0x000A4D 00:CA3D: A9 00     LDA #$00
 C - - - - - 0x000A4F 00:CA3F: 38        SEC
-C - - - - - 0x000A50 00:CA40: FD 08 05  SBC ram_0508_bolt_x_vel_frac,X                             ; Lightning Bolt
-C - - - - - 0x000A53 00:CA43: 9D 08 05  STA ram_0508_bolt_x_vel_frac,X                             ; Reverse X Velocity
+C - - - - - 0x000A50 00:CA40: FD 08 05  SBC ram_0508_bolt_x_vel_frac_01,X                          ; Lightning Bolt
+C - - - - - 0x000A53 00:CA43: 9D 08 05  STA ram_0508_bolt_x_vel_frac_01,X                          ; Reverse X Velocity
 C - - - - - 0x000A56 00:CA46: A9 00     LDA #$00
-C - - - - - 0x000A58 00:CA48: FD E0 04  SBC ram_04E0_bolt_x_vel_int,X
-C - - - - - 0x000A5B 00:CA4B: 9D E0 04  STA ram_04E0_bolt_x_vel_int,X
+C - - - - - 0x000A58 00:CA48: FD E0 04  SBC ram_04E0_bolt_x_vel_int_01,X
+C - - - - - 0x000A5B 00:CA4B: 9D E0 04  STA ram_04E0_bolt_x_vel_int_01,X
 C - - - - - 0x000A5E 00:CA4E: 60        RTS
 sub_CA4F:
 C - - - - - 0x000A5F 00:CA4F: A5 F3     LDA ram_00F3_sfx_3
-C - - - - - 0x000A61 00:CA51: 09 80     ORA #$80                                                   ; Play SFX
+C - - - - - 0x000A61 00:CA51: 09 80     ORA #$80                                                   ; Play Bolt Bounce SFX
 C - - - - - 0x000A63 00:CA53: 85 F3     STA ram_00F3_sfx_3
 sub_CA55:
 C - - - - - 0x000A65 00:CA55: A9 00     LDA #$00
 C - - - - - 0x000A67 00:CA57: 38        SEC
-C - - - - - 0x000A68 00:CA58: FD 1C 05  SBC ram_051C_bolt_y_vel_frac,X                             ; Lightning Bolt
-C - - - - - 0x000A6B 00:CA5B: 9D 1C 05  STA ram_051C_bolt_y_vel_frac,X                             ; Reverse Y Velocity
+C - - - - - 0x000A68 00:CA58: FD 1C 05  SBC ram_051C_bolt_y_vel_frac_01,X                          ; Lightning Bolt
+C - - - - - 0x000A6B 00:CA5B: 9D 1C 05  STA ram_051C_bolt_y_vel_frac_01,X                          ; Reverse Y Velocity
 C - - - - - 0x000A6E 00:CA5E: A9 00     LDA #$00
-C - - - - - 0x000A70 00:CA60: FD F4 04  SBC ram_04F4_bolt_y_vel_int,X
-C - - - - - 0x000A73 00:CA63: 9D F4 04  STA ram_04F4_bolt_y_vel_int,X
+C - - - - - 0x000A70 00:CA60: FD F4 04  SBC ram_04F4_bolt_y_vel_int_01,X
+C - - - - - 0x000A73 00:CA63: 9D F4 04  STA ram_04F4_bolt_y_vel_int_01,X
 C - - - - - 0x000A76 00:CA66: 60        RTS
 sub_CA67:
 ; Lightning Bolt Platform Collision?
@@ -1635,19 +1636,19 @@ C - - - - - 0x000A7B 00:CA6B: 85 CC     STA ram_00CC_collision_related
 C - - - - - 0x000A7D 00:CA6D: B1 27     LDA (ram_0027_plat_coll_pointer_top),Y
 C - - - - - 0x000A7F 00:CA6F: 38        SEC
 C - - - - - 0x000A80 00:CA70: E9 08     SBC #$08
-C - - - - - 0x000A82 00:CA72: DD A4 04  CMP ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000A82 00:CA72: DD A4 04  CMP ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000A85 00:CA75: B0 66     BCS bra_CADD
 C - - - - - 0x000A87 00:CA77: 69 03     ADC #$03
-C - - - - - 0x000A89 00:CA79: DD A4 04  CMP ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000A89 00:CA79: DD A4 04  CMP ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000A8C 00:CA7C: 90 04     BCC bra_CA82
 C - - - - - 0x000A8E 00:CA7E: A9 01     LDA #$01
 C - - - - - 0x000A90 00:CA80: D0 10     BNE bra_CA92
 bra_CA82:
 C - - - - - 0x000A92 00:CA82: B1 29     LDA (ram_0029_plat_coll_pointer_bottom),Y
-C - - - - - 0x000A94 00:CA84: DD A4 04  CMP ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000A94 00:CA84: DD A4 04  CMP ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000A97 00:CA87: 90 54     BCC bra_CADD
 C - - - - - 0x000A99 00:CA89: E9 03     SBC #$03
-C - - - - - 0x000A9B 00:CA8B: DD A4 04  CMP ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000A9B 00:CA8B: DD A4 04  CMP ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000A9E 00:CA8E: B0 1D     BCS bra_CAAD
 C - - - - - 0x000AA0 00:CA90: A9 02     LDA #$02
 bra_CA92:
@@ -1657,11 +1658,11 @@ C - - - - - 0x000AA6 00:CA96: C9 10     CMP #$10
 C - - - - - 0x000AA8 00:CA98: F0 08     BEQ bra_CAA2
 C - - - - - 0x000AAA 00:CA9A: 38        SEC
 C - - - - - 0x000AAB 00:CA9B: E9 04     SBC #$04
-C - - - - - 0x000AAD 00:CA9D: DD 90 04  CMP ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000AAD 00:CA9D: DD 90 04  CMP ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000AB0 00:CAA0: B0 07     BCS bra_CAA9
 bra_CAA2:
 C - - - - - 0x000AB2 00:CAA2: B1 25     LDA (ram_0025_plat_coll_pointer_right),Y
-C - - - - - 0x000AB4 00:CAA4: DD 90 04  CMP ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000AB4 00:CAA4: DD 90 04  CMP ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000AB7 00:CAA7: B0 04     BCS bra_CAAD
 bra_CAA9:
 C - - - - - 0x000AB9 00:CAA9: A9 00     LDA #$00
@@ -1672,10 +1673,10 @@ C - - - - - 0x000ABF 00:CAAF: C9 10     CMP #$10
 C - - - - - 0x000AC1 00:CAB1: F0 15     BEQ bra_CAC8
 C - - - - - 0x000AC3 00:CAB3: 38        SEC
 C - - - - - 0x000AC4 00:CAB4: E9 08     SBC #$08
-C - - - - - 0x000AC6 00:CAB6: DD 90 04  CMP ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000AC6 00:CAB6: DD 90 04  CMP ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000AC9 00:CAB9: B0 22     BCS bra_CADD
 C - - - - - 0x000ACB 00:CABB: 69 03     ADC #$03
-C - - - - - 0x000ACD 00:CABD: DD 90 04  CMP ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000ACD 00:CABD: DD 90 04  CMP ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000AD0 00:CAC0: 90 06     BCC bra_CAC8
 C - - - - - 0x000AD2 00:CAC2: A5 CC     LDA ram_00CC_collision_related
 C - - - - - 0x000AD4 00:CAC4: 09 04     ORA #$04
@@ -1684,7 +1685,7 @@ bra_CAC8:
 C - - - - - 0x000AD8 00:CAC8: B1 25     LDA (ram_0025_plat_coll_pointer_right),Y
 C - - - - - 0x000ADA 00:CACA: C9 FF     CMP #$FF
 C - - - - - 0x000ADC 00:CACC: F0 0F     BEQ bra_CADD
-C - - - - - 0x000ADE 00:CACE: DD 90 04  CMP ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000ADE 00:CACE: DD 90 04  CMP ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000AE1 00:CAD1: 90 0A     BCC bra_CADD
 C - - - - - 0x000AE3 00:CAD3: E9 03     SBC #$03
 C - - - - - 0x000AE5 00:CAD5: B0 06     BCS bra_CADD
@@ -1704,25 +1705,25 @@ C - - - - - 0x000AF7 00:CAE7: 60        RTS
 bra_CAE8:
 C - - - - - 0x000AF8 00:CAE8: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x000AFA 00:CAEA: 90 08     BCC bra_CAF4
-C - - - - - 0x000AFC 00:CAEC: BD F4 04  LDA ram_04F4_bolt_y_vel_int,X
+C - - - - - 0x000AFC 00:CAEC: BD F4 04  LDA ram_04F4_bolt_y_vel_int_01,X
 C - - - - - 0x000AFF 00:CAEF: 30 03     BMI bra_CAF4
 C - - - - - 0x000B01 00:CAF1: 20 4F CA  JSR sub_CA4F
 bra_CAF4:
 C - - - - - 0x000B04 00:CAF4: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x000B06 00:CAF6: 90 08     BCC bra_CB00
-C - - - - - 0x000B08 00:CAF8: BD F4 04  LDA ram_04F4_bolt_y_vel_int,X
+C - - - - - 0x000B08 00:CAF8: BD F4 04  LDA ram_04F4_bolt_y_vel_int_01,X
 C - - - - - 0x000B0B 00:CAFB: 10 03     BPL bra_CB00
 C - - - - - 0x000B0D 00:CAFD: 20 4F CA  JSR sub_CA4F
 bra_CB00:
 C - - - - - 0x000B10 00:CB00: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x000B12 00:CB02: 90 08     BCC bra_CB0C
-C - - - - - 0x000B14 00:CB04: BD E0 04  LDA ram_04E0_bolt_x_vel_int,X
+C - - - - - 0x000B14 00:CB04: BD E0 04  LDA ram_04E0_bolt_x_vel_int_01,X
 C - - - - - 0x000B17 00:CB07: 30 03     BMI bra_CB0C
 C - - - - - 0x000B19 00:CB09: 20 37 CA  JSR sub_CA37
 bra_CB0C:
 C - - - - - 0x000B1C 00:CB0C: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x000B1E 00:CB0E: 90 08     BCC bra_CB18
-- - - - - - 0x000B20 00:CB10: BD E0 04  LDA ram_04E0_bolt_x_vel_int,X
+- - - - - - 0x000B20 00:CB10: BD E0 04  LDA ram_04E0_bolt_x_vel_int_01,X
 - - - - - - 0x000B23 00:CB13: 10 03     BPL bra_CB18
 - - - - - - 0x000B25 00:CB15: 20 37 CA  JSR sub_CA37
 bra_CB18:
@@ -1742,13 +1743,13 @@ C - - - - - 0x000B31 00:CB21: 30 4D     BMI bra_CB70                            
 C - - - - - 0x000B33 00:CB23: F0 4B     BEQ bra_CB70
 C - - - - - 0x000B35 00:CB25: B9 BD 00  LDA ram_00BD_p1_invincibility_flag,Y                       ; and if Player Y is not invincible...
 C - - - - - 0x000B38 00:CB28: D0 46     BNE bra_CB70
-C - - - - - 0x000B3A 00:CB2A: BD 90 04  LDA ram_0490_bolt_x_pos_int,X
+C - - - - - 0x000B3A 00:CB2A: BD 90 04  LDA ram_0490_bolt_x_pos_int_01,X
 C - - - - - 0x000B3D 00:CB2D: 38        SEC                                                        ; If Player Y's X position
 C - - - - - 0x000B3E 00:CB2E: F9 91 00  SBC ram_0091_object_x_pos_int_p1,Y                         ; is within the X position
 C - - - - - 0x000B41 00:CB31: 20 8E F0  JSR sub_F08E_Absolute                                      ; of Lightning Bolt X
 C - - - - - 0x000B44 00:CB34: C9 08     CMP #$08                                                   ; (size 8 pixels)
 C - - - - - 0x000B46 00:CB36: B0 38     BCS bra_CB70
-C - - - - - 0x000B48 00:CB38: BD A4 04  LDA ram_04A4_bolt_y_pos_int,X
+C - - - - - 0x000B48 00:CB38: BD A4 04  LDA ram_04A4_bolt_y_pos_int_01,X
 C - - - - - 0x000B4B 00:CB3B: 38        SEC
 C - - - - - 0x000B4C 00:CB3C: F9 9A 00  SBC ram_009A_object_y_pos_int_p1,Y                         ; If Player Y's Y position
 C - - - - - 0x000B4F 00:CB3F: 38        SEC                                                        ; is within the Y position
@@ -1762,16 +1763,16 @@ C - - - - - 0x000B5E 00:CB4E: A9 01     LDA #$01
 C - - - - - 0x000B60 00:CB50: 99 7F 00  STA ram_007F_object_status_p1,Y                            ; Player Y's status = #$01
 C - - - - - 0x000B63 00:CB53: 99 C1 00  STA ram_00C1_p1_freeze_flag,Y                              ; Player Y's freeze flag = #$01
 C - - - - - 0x000B66 00:CB56: A9 0B     LDA #$0B
-C - - - - - 0x000B68 00:CB58: 99 51 04  STA ram_0451_object_type,Y                                 ; Player Y's type = #$0B
+C - - - - - 0x000B68 00:CB58: 99 51 04  STA ram_0451_object_type_p1,Y                              ; Player Y's type = #$0B
 C - - - - - 0x000B6B 00:CB5B: A9 20     LDA #$20
-C - - - - - 0x000B6D 00:CB5D: 99 5A 04  STA ram_045A,Y                                             ; Player Y's ? = #$20
+C - - - - - 0x000B6D 00:CB5D: 99 5A 04  STA ram_045A_shock_timer_p1,Y                              ; Player Y's shock time = #$20
 C - - - - - 0x000B70 00:CB60: A5 F0     LDA ram_00F0_sfx_1
-C - - - - - 0x000B72 00:CB62: 09 80     ORA #$80                                                   ; Play SFX
+C - - - - - 0x000B72 00:CB62: 09 80     ORA #$80                                                   ; Play Shock SFX
 C - - - - - 0x000B74 00:CB64: 85 F0     STA ram_00F0_sfx_1
 C - - - - - 0x000B76 00:CB66: A9 F0     LDA #$F0
-C - - - - - 0x000B78 00:CB68: 9D A4 04  STA ram_04A4_bolt_y_pos_int,X                              ; Lightning Bolt X
+C - - - - - 0x000B78 00:CB68: 9D A4 04  STA ram_04A4_bolt_y_pos_int_01,X                           ; Lightning Bolt X
 C - - - - - 0x000B7B 00:CB6B: A9 FF     LDA #$FF                                                   ; disappears
-C - - - - - 0x000B7D 00:CB6D: 9D 30 05  STA ram_0530_bolt_animation_f,X
+C - - - - - 0x000B7D 00:CB6D: 9D 30 05  STA ram_0530_bolt_animation_f_01,X
 bra_CB70:
 C - - - - - 0x000B80 00:CB70: 88        DEY                                                        ; Check next player
 C - - - - - 0x000B81 00:CB71: 10 AB     BPL bra_CB1E
@@ -1844,7 +1845,7 @@ C - - - - - 0x000BF9 00:CBE9: 30 11     BMI bra_CBFC
 C - - - - - 0x000BFB 00:CBEB: C9 03     CMP #$03
 C - - - - - 0x000BFD 00:CBED: 90 1C     BCC bra_CC0B
 C - - - - - 0x000BFF 00:CBEF: A9 02     LDA #$02
-C - - - - - 0x000C01 00:CBF1: 99 1B 04  STA ram_041B_y_vel_int,Y
+C - - - - - 0x000C01 00:CBF1: 99 1B 04  STA ram_041B_y_vel_int_p1,Y
 C - - - - - 0x000C04 00:CBF4: 20 33 CC  JSR sub_CC33
 C - - - - - 0x000C07 00:CBF7: 20 BB EB  JSR sub_EBBB
 C - - - - - 0x000C0A 00:CBFA: D0 0F     BNE bra_CC0B
@@ -1852,7 +1853,7 @@ bra_CBFC:
 C - - - - - 0x000C0C 00:CBFC: C9 FD     CMP #$FD
 C - - - - - 0x000C0E 00:CBFE: B0 0B     BCS bra_CC0B
 C - - - - - 0x000C10 00:CC00: A9 FE     LDA #$FE
-C - - - - - 0x000C12 00:CC02: 99 1B 04  STA ram_041B_y_vel_int,Y
+C - - - - - 0x000C12 00:CC02: 99 1B 04  STA ram_041B_y_vel_int_p1,Y
 C - - - - - 0x000C15 00:CC05: 20 BB EB  JSR sub_EBBB
 C - - - - - 0x000C18 00:CC08: 20 33 CC  JSR sub_CC33
 bra_CC0B:
@@ -1861,7 +1862,7 @@ C - - - - - 0x000C1D 00:CC0D: 30 11     BMI bra_CC20
 C - - - - - 0x000C1F 00:CC0F: C9 03     CMP #$03
 C - - - - - 0x000C21 00:CC11: 90 1C     BCC bra_CC2F
 C - - - - - 0x000C23 00:CC13: A9 02     LDA #$02
-C - - - - - 0x000C25 00:CC15: 99 2D 04  STA ram_042D_x_vel_int,Y
+C - - - - - 0x000C25 00:CC15: 99 2D 04  STA ram_042D_x_vel_int_p1,Y
 C - - - - - 0x000C28 00:CC18: 20 B2 EB  JSR sub_EBB2
 C - - - - - 0x000C2B 00:CC1B: 20 33 CC  JSR sub_CC33
 C - - - - - 0x000C2E 00:CC1E: D0 0F     BNE bra_CC2F
@@ -1869,7 +1870,7 @@ bra_CC20:
 C - - - - - 0x000C30 00:CC20: C9 FD     CMP #$FD
 C - - - - - 0x000C32 00:CC22: B0 0B     BCS bra_CC2F
 C - - - - - 0x000C34 00:CC24: A9 FE     LDA #$FE
-C - - - - - 0x000C36 00:CC26: 99 2D 04  STA ram_042D_x_vel_int,Y
+C - - - - - 0x000C36 00:CC26: 99 2D 04  STA ram_042D_x_vel_int_p1,Y
 C - - - - - 0x000C39 00:CC29: 20 B2 EB  JSR sub_EBB2
 C - - - - - 0x000C3C 00:CC2C: 20 33 CC  JSR sub_CC33
 bra_CC2F:
@@ -2177,29 +2178,29 @@ C - - - - - 0x000E4E 00:CE3E: 0A        ASL
 C - - - - - 0x000E4F 00:CE3F: 0A        ASL
 C - - - - - 0x000E50 00:CE40: A8        TAY
 C - - - - - 0x000E51 00:CE41: BD 7B 05  LDA ram_057B_balloon_y_pos,X
-C - - - - - 0x000E54 00:CE44: 99 50 02  STA ram_0250,Y
-C - - - - - 0x000E57 00:CE47: 99 54 02  STA ram_0254,Y
+C - - - - - 0x000E54 00:CE44: 99 50 02  STA ram_0250_sprite_14_y,Y
+C - - - - - 0x000E57 00:CE47: 99 54 02  STA ram_0254_sprite_15_y,Y
 C - - - - - 0x000E5A 00:CE4A: 18        CLC
 C - - - - - 0x000E5B 00:CE4B: 69 08     ADC #$08
-C - - - - - 0x000E5D 00:CE4D: 99 58 02  STA ram_0258,Y
+C - - - - - 0x000E5D 00:CE4D: 99 58 02  STA ram_0258_sprite_16_y,Y
 C - - - - - 0x000E60 00:CE50: BD 67 05  LDA ram_0567_balloon_x_pos,X
-C - - - - - 0x000E63 00:CE53: 99 53 02  STA ram_0253,Y
+C - - - - - 0x000E63 00:CE53: 99 53 02  STA ram_0253_sprite_14_x,Y
 C - - - - - 0x000E66 00:CE56: 18        CLC
 C - - - - - 0x000E67 00:CE57: 69 04     ADC #$04
-C - - - - - 0x000E69 00:CE59: 99 5B 02  STA ram_025B,Y
+C - - - - - 0x000E69 00:CE59: 99 5B 02  STA ram_025B_sprite_16_x,Y
 C - - - - - 0x000E6C 00:CE5C: 18        CLC
 C - - - - - 0x000E6D 00:CE5D: 69 04     ADC #$04
-C - - - - - 0x000E6F 00:CE5F: 99 57 02  STA ram_0257,Y
+C - - - - - 0x000E6F 00:CE5F: 99 57 02  STA ram_0257_sprite_15_x,Y
 C - - - - - 0x000E72 00:CE62: A5 13     LDA ram_0013_temp
-C - - - - - 0x000E74 00:CE64: 99 52 02  STA ram_0252,Y
-C - - - - - 0x000E77 00:CE67: 99 56 02  STA ram_0256,Y
-C - - - - - 0x000E7A 00:CE6A: 99 5A 02  STA ram_025A,Y
+C - - - - - 0x000E74 00:CE64: 99 52 02  STA ram_0252_sprite_14_attributes,Y
+C - - - - - 0x000E77 00:CE67: 99 56 02  STA ram_0256_sprite_15_attributes,Y
+C - - - - - 0x000E7A 00:CE6A: 99 5A 02  STA ram_025A_sprite_16_attributes,Y
 C - - - - - 0x000E7D 00:CE6D: BD 5D 05  LDA ram_055D_balloon_gfx,X
 C - - - - - 0x000E80 00:CE70: 30 27     BMI bra_CE99
 C - - - - - 0x000E82 00:CE72: A9 A8     LDA #$A8
-C - - - - - 0x000E84 00:CE74: 99 51 02  STA ram_0251,Y
+C - - - - - 0x000E84 00:CE74: 99 51 02  STA ram_0251_sprite_14_tile,Y
 C - - - - - 0x000E87 00:CE77: A9 A9     LDA #$A9
-C - - - - - 0x000E89 00:CE79: 99 55 02  STA ram_0255,Y
+C - - - - - 0x000E89 00:CE79: 99 55 02  STA ram_0255_sprite_15_tile,Y
 C - - - - - 0x000E8C 00:CE7C: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x000E8E 00:CE7E: 4A        LSR
 C - - - - - 0x000E8F 00:CE7F: 4A        LSR
@@ -2209,21 +2210,21 @@ C - - - - - 0x000E92 00:CE82: 29 07     AND #$07
 C - - - - - 0x000E94 00:CE84: 86 13     STX ram_0013_temp
 C - - - - - 0x000E96 00:CE86: AA        TAX
 C - - - - - 0x000E97 00:CE87: BD B5 CE  LDA tbl_CEB5,X
-C - - - - - 0x000E9A 00:CE8A: 99 59 02  STA ram_0259,Y
-C - - - - - 0x000E9D 00:CE8D: B9 5A 02  LDA ram_025A,Y
+C - - - - - 0x000E9A 00:CE8A: 99 59 02  STA ram_0259_sprite_16_tile,Y
+C - - - - - 0x000E9D 00:CE8D: B9 5A 02  LDA ram_025A_sprite_16_attributes,Y
 C - - - - - 0x000EA0 00:CE90: 5D BD CE  EOR tbl_CEBD,X
-C - - - - - 0x000EA3 00:CE93: 99 5A 02  STA ram_025A,Y
+C - - - - - 0x000EA3 00:CE93: 99 5A 02  STA ram_025A_sprite_16_attributes,Y
 C - - - - - 0x000EA6 00:CE96: A6 13     LDX ram_0013_temp
 C - - - - - 0x000EA8 00:CE98: 60        RTS
 bra_CE99:
 C - - - - - 0x000EA9 00:CE99: A9 F0     LDA #$F0
 C - - - - - 0x000EAB 00:CE9B: 9D 7B 05  STA ram_057B_balloon_y_pos,X
 C - - - - - 0x000EAE 00:CE9E: A9 AC     LDA #$AC
-C - - - - - 0x000EB0 00:CEA0: 99 51 02  STA ram_0251,Y
+C - - - - - 0x000EB0 00:CEA0: 99 51 02  STA ram_0251_sprite_14_tile,Y
 C - - - - - 0x000EB3 00:CEA3: A9 AD     LDA #$AD
-C - - - - - 0x000EB5 00:CEA5: 99 55 02  STA ram_0255,Y
+C - - - - - 0x000EB5 00:CEA5: 99 55 02  STA ram_0255_sprite_15_tile,Y
 C - - - - - 0x000EB8 00:CEA8: A9 FC     LDA #$FC
-C - - - - - 0x000EBA 00:CEAA: 99 59 02  STA ram_0259,Y
+C - - - - - 0x000EBA 00:CEAA: 99 59 02  STA ram_0259_sprite_16_tile,Y
 C - - - - - 0x000EBD 00:CEAD: 60        RTS
 tbl_CEAE_Balloon_X_Sprouts:
 - D 2 - - - 0x000EBE 00:CEAE: 20        .byte $20   ; 
@@ -2295,8 +2296,8 @@ C - - - - - 0x000F11 00:CF01: B9 CD 05  LDA ram_05CD_touched_balloons_counter,Y
 C - - - - - 0x000F14 00:CF04: 18        CLC
 C - - - - - 0x000F15 00:CF05: 69 01     ADC #$01
 C - - - - - 0x000F17 00:CF07: 99 CD 05  STA ram_05CD_touched_balloons_counter,Y
-C - - - - - 0x000F1A 00:CF0A: A9 02     LDA #$02
-C - - - - - 0x000F1C 00:CF0C: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x000F1A 00:CF0A: A9 02     LDA #$02                                                   ; \ Play Balloon Pop SFX
+C - - - - - 0x000F1C 00:CF0C: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x000F1E 00:CF0E: 60        RTS
 bra_CF0F:
 C - - - - - 0x000F1F 00:CF0F: 88        DEY
@@ -2366,7 +2367,7 @@ C - - - - - 0x000F95 00:CF85: 95 9A     STA ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x000F97 00:CF87: A9 03     LDA #$03
 C - - - - - 0x000F99 00:CF89: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x000F9B 00:CF8B: A9 01     LDA #$01
-C - - - - - 0x000F9D 00:CF8D: 9D 48 04  STA ram_0448_direction,X
+C - - - - - 0x000F9D 00:CF8D: 9D 48 04  STA ram_0448_direction_p1,X
 C - - - - - 0x000FA0 00:CF90: 20 B0 F3  JSR sub_F3B0_Init_Player_Type
 C - - - - - 0x000FA3 00:CF93: 20 A4 E3  JSR sub_E3A4
 C - - - - - 0x000FA6 00:CF96: CA        DEX
@@ -2435,8 +2436,8 @@ bra_D01D:
 C - - - - - 0x00102D 00:D01D: 20 2F CE  JSR sub_CE2F_Balloon_X_Sprite_Manage
 C - - - - - 0x001030 00:D020: CA        DEX
 C - - - - - 0x001031 00:D021: 10 FA     BPL bra_D01D
-C - - - - - 0x001033 00:D023: A9 02     LDA #$02
-C - - - - - 0x001035 00:D025: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x001033 00:D023: A9 02     LDA #$02                                                   ; \ Play Balloon Pop SFX
+C - - - - - 0x001035 00:D025: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x001037 00:D027: A2 02     LDX #$02
 C - - - - - 0x001039 00:D029: 20 5E F4  JSR sub_F45E_Wait_Y_Ticks
 C - - - - - 0x00103C 00:D02C: A6 40     LDX ram_0040_2p_flag
@@ -2446,8 +2447,8 @@ C - - - - - 0x001041 00:D031: CA        DEX
 C - - - - - 0x001042 00:D032: 10 FA     BPL bra_D02E
 C - - - - - 0x001044 00:D034: 20 A0 D1  JSR sub_D1A0
 C - - - - - 0x001047 00:D037: 20 5C F4  JSR sub_F45C_Wait_20_Ticks
-C - - - - - 0x00104A 00:D03A: A9 01     LDA #$01
-C - - - - - 0x00104C 00:D03C: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x00104A 00:D03A: A9 01     LDA #$01                                                   ; \ Stop All Sounds
+C - - - - - 0x00104C 00:D03C: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x00104E 00:D03E: 20 21 D1  JSR sub_D121_Balloons_Collected_Check
 C - - - - - 0x001051 00:D041: D0 25     BNE bra_D068
 C - - - - - 0x001053 00:D043: A9 70     LDA #< tbl_D170
@@ -2727,7 +2728,7 @@ C - - - - - 0x001276 00:D266: 84 4C     STY ram_004C_star_update
 bra_D268:
 ; Hide all sprites.
 C - - - - - 0x001278 00:D268: A9 F0     LDA #$F0
-C - - - - - 0x00127A 00:D26A: 99 00 02  STA ram_0200_oam_buffer,Y
+C - - - - - 0x00127A 00:D26A: 99 00 02  STA ram_0200_sprite_00_y,Y
 C - - - - - 0x00127D 00:D26D: C8        INY
 C - - - - - 0x00127E 00:D26E: C8        INY
 C - - - - - 0x00127F 00:D26F: C8        INY
@@ -2895,13 +2896,13 @@ C - - - - - 0x0013B1 00:D3A1: C8        INY
 C - - - - - 0x0013B2 00:D3A2: 95 9C     STA ram_009C_object_y_pos_int_enemy1,X
 C - - - - - 0x0013B4 00:D3A4: B1 1F     LDA (ram_001F_gfx_enemy_data_pointer_1f),Y                 ; Load Enemy Type
 C - - - - - 0x0013B6 00:D3A6: C8        INY
-C - - - - - 0x0013B7 00:D3A7: 9D 53 04  STA ram_0453,X
+C - - - - - 0x0013B7 00:D3A7: 9D 53 04  STA ram_0453_object_type_enemy1,X
 C - - - - - 0x0013BA 00:D3AA: A9 02     LDA #$02                                                   ; Initialize Enemy Status
 C - - - - - 0x0013BC 00:D3AC: 95 81     STA ram_0081_object_status_enemy1,X                        ; (#$02 = Sitting)
 C - - - - - 0x0013BE 00:D3AE: A9 01     LDA #$01                                                   ; Initialize Enemy Balloons
 C - - - - - 0x0013C0 00:D3B0: 95 8A     STA ram_008A_object_balloons_enemy1,X                      ; (#$01 = Sitting/Umbrella)
-C - - - - - 0x0013C2 00:D3B2: A5 C6     LDA ram_00C6                                               ; Initialize Enemy ?
-C - - - - - 0x0013C4 00:D3B4: 9D 41 04  STA ram_0441,X
+C - - - - - 0x0013C2 00:D3B2: A5 C6     LDA ram_00C6                                               ; Initialize Enemy Animation Frame Timer
+C - - - - - 0x0013C4 00:D3B4: 9D 41 04  STA ram_0441_animation_f_timer_enemy1,X
 C - - - - - 0x0013C7 00:D3B7: CA        DEX
 C - - - - - 0x0013C8 00:D3B8: 10 E0     BPL bra_D39A                                               ; Load another Enemy's data
 loc_D3BA:
@@ -3613,23 +3614,23 @@ C - - - - - 0x0018A9 00:D899: 0A        ASL
 C - - - - - 0x0018AA 00:D89A: 0A        ASL
 C - - - - - 0x0018AB 00:D89B: AA        TAX
 C - - - - - 0x0018AC 00:D89C: B9 D1 D8  LDA tbl_D8D1,Y
-C - - - - - 0x0018AF 00:D89F: 9D F1 02  STA ram_02F1,X
+C - - - - - 0x0018AF 00:D89F: 9D F1 02  STA ram_02F1_sprite_3C_tile,X
 C - - - - - 0x0018B2 00:D8A2: B9 D7 D8  LDA tbl_D8D7,Y
-C - - - - - 0x0018B5 00:D8A5: 9D F5 02  STA ram_02F5,X
+C - - - - - 0x0018B5 00:D8A5: 9D F5 02  STA ram_02F5_sprite_3D_tile,X
 C - - - - - 0x0018B8 00:D8A8: A4 13     LDY ram_0013_temp
 C - - - - - 0x0018BA 00:D8AA: B9 9A 00  LDA ram_009A_object_y_pos_int_p1,Y
 C - - - - - 0x0018BD 00:D8AD: 38        SEC
 C - - - - - 0x0018BE 00:D8AE: E9 08     SBC #$08
-C - - - - - 0x0018C0 00:D8B0: 9D F0 02  STA ram_02F0,X
-C - - - - - 0x0018C3 00:D8B3: 9D F4 02  STA ram_02F4,X
+C - - - - - 0x0018C0 00:D8B0: 9D F0 02  STA ram_02F0_sprite_3C_y,X
+C - - - - - 0x0018C3 00:D8B3: 9D F4 02  STA ram_02F4_sprite_3D_y,X
 C - - - - - 0x0018C6 00:D8B6: B9 91 00  LDA ram_0091_object_x_pos_int_p1,Y
-C - - - - - 0x0018C9 00:D8B9: 9D F3 02  STA ram_02F3,X
+C - - - - - 0x0018C9 00:D8B9: 9D F3 02  STA ram_02F3_sprite_3C_x,X
 C - - - - - 0x0018CC 00:D8BC: 18        CLC
 C - - - - - 0x0018CD 00:D8BD: 69 08     ADC #$08
-C - - - - - 0x0018CF 00:D8BF: 9D F7 02  STA ram_02F7,X
+C - - - - - 0x0018CF 00:D8BF: 9D F7 02  STA ram_02F7_sprite_3D_x,X
 C - - - - - 0x0018D2 00:D8C2: A5 3E     LDA ram_003E_score_id_update
-C - - - - - 0x0018D4 00:D8C4: 9D F2 02  STA ram_02F2,X
-C - - - - - 0x0018D7 00:D8C7: 9D F6 02  STA ram_02F6,X
+C - - - - - 0x0018D4 00:D8C4: 9D F2 02  STA ram_02F2_sprite_3C_attributes,X
+C - - - - - 0x0018D7 00:D8C7: 9D F6 02  STA ram_02F6_sprite_3D_attributes,X
 C - - - - - 0x0018DA 00:D8CA: A4 14     LDY ram_0014_temp
 C - - - - - 0x0018DC 00:D8CC: A6 13     LDX ram_0013_temp
 C - - - - - 0x0018DE 00:D8CE: A5 12     LDA ram_0012_temp
@@ -3663,8 +3664,8 @@ C - - - - - 0x001900 00:D8F0: 0A        ASL
 C - - - - - 0x001901 00:D8F1: 0A        ASL
 C - - - - - 0x001902 00:D8F2: A8        TAY
 C - - - - - 0x001903 00:D8F3: A9 F0     LDA #$F0
-C - - - - - 0x001905 00:D8F5: 99 F0 02  STA ram_02F0,Y
-C - - - - - 0x001908 00:D8F8: 99 F4 02  STA ram_02F4,Y
+C - - - - - 0x001905 00:D8F5: 99 F0 02  STA ram_02F0_sprite_3C_y,Y
+C - - - - - 0x001908 00:D8F8: 99 F4 02  STA ram_02F4_sprite_3D_y,Y
 bra_D8FB:
 C - - - - - 0x00190B 00:D8FB: CA        DEX
 C - - - - - 0x00190C 00:D8FC: 10 E1     BPL bra_D8DF
@@ -6199,7 +6200,7 @@ C - - - - - 0x0023E1 00:E3D1: F0 48     BEQ bra_E41B
 C - - - - - 0x0023E3 00:E3D3: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x0023E5 00:E3D5: 0A        ASL                                                        ; (Object Status * 4) + Animation Frame
 C - - - - - 0x0023E6 00:E3D6: 0A        ASL
-C - - - - - 0x0023E7 00:E3D7: 7D 36 04  ADC ram_0436_animation_f,X
+C - - - - - 0x0023E7 00:E3D7: 7D 36 04  ADC ram_0436_animation_f_p1,X
 C - - - - - 0x0023EA 00:E3DA: E0 02     CPX #$02                                                   ; If Object is a Player
 C - - - - - 0x0023EC 00:E3DC: B0 2A     BCS bra_E408
 C - - - - - 0x0023EE 00:E3DE: B4 88     LDY ram_0088_object_balloons_p1,X
@@ -6213,7 +6214,7 @@ C - - - - - 0x0023FE 00:E3EE: B5 BD     LDA ram_00BD_p1_invincibility_flag,X    
 C - - - - - 0x002400 00:E3F0: F0 37     BEQ bra_E429
 C - - - - - 0x002402 00:E3F2: B4 88     LDY ram_0088_object_balloons_p1,X                          ; Y = Player X Balloons
 C - - - - - 0x002404 00:E3F4: B9 4F E3  LDA tbl_E34C + 3,Y
-C - - - - - 0x002407 00:E3F7: 7D 36 04  ADC ram_0436_animation_f,X                                 ; Y = [tbl_E34C+3 + Balloons + Frame]
+C - - - - - 0x002407 00:E3F7: 7D 36 04  ADC ram_0436_animation_f_p1,X                              ; Y = [tbl_E34C+3 + Balloons + Frame]
 C - - - - - 0x00240A 00:E3FA: A8        TAY
 C - - - - - 0x00240B 00:E3FB: B9 E4 E2  LDA tbl_E2E4_lo,Y
 C - - - - - 0x00240E 00:E3FE: 85 1D     STA ram_001D_loading_pointer_1d                            ; Set Pointer
@@ -6250,12 +6251,12 @@ C - - - - - 0x002446 00:E436: D0 04     BNE bra_E43C
 C - - - - - 0x002448 00:E438: A9 01     LDA #$01
 C - - - - - 0x00244A 00:E43A: D0 08     BNE bra_E444
 bra_E43C:
-C - - - - - 0x00244C 00:E43C: BD 51 04  LDA ram_0451_object_type,X
+C - - - - - 0x00244C 00:E43C: BD 51 04  LDA ram_0451_object_type_p1,X
 C - - - - - 0x00244F 00:E43F: 18        CLC
 C - - - - - 0x002450 00:E440: 69 02     ADC #$02
 C - - - - - 0x002452 00:E442: 29 03     AND #$03
 bra_E444:
-C - - - - - 0x002454 00:E444: BC 48 04  LDY ram_0448_direction,X
+C - - - - - 0x002454 00:E444: BC 48 04  LDY ram_0448_direction_p1,X
 C - - - - - 0x002457 00:E447: F0 02     BEQ bra_E44B
 C - - - - - 0x002459 00:E449: 09 40     ORA #$40
 bra_E44B:
@@ -6280,7 +6281,7 @@ C - - - - - 0x002477 00:E467: A9 43     LDA #< tbl_E043
 C - - - - - 0x002479 00:E469: 85 21     STA ram_0021_hi_score_pointer_21
 C - - - - - 0x00247B 00:E46B: A9 E0     LDA #> tbl_E043
 C - - - - - 0x00247D 00:E46D: 85 22     STA ram_0022_hi_score_pointer_21
-C - - - - - 0x00247F 00:E46F: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00247F 00:E46F: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x002482 00:E472: F0 08     BEQ bra_E47C
 C - - - - - 0x002484 00:E474: A9 79     LDA #< tbl_E079
 C - - - - - 0x002486 00:E476: 85 21     STA ram_0021_hi_score_pointer_21
@@ -6348,43 +6349,43 @@ C D 3 - - - 0x0024E5 00:E4D5: 8A        TXA
 C - - - - - 0x0024E6 00:E4D6: 48        PHA
 C - - - - - 0x0024E7 00:E4D7: A4 1F     LDY ram_001F_gfx_enemy_data_pointer_1f
 C - - - - - 0x0024E9 00:E4D9: B5 9A     LDA ram_009A_object_y_pos_int_p1,X
-C - - - - - 0x0024EB 00:E4DB: 99 00 02  STA ram_0200_oam_buffer,Y
-C - - - - - 0x0024EE 00:E4DE: 99 04 02  STA ram_0204,Y
+C - - - - - 0x0024EB 00:E4DB: 99 00 02  STA ram_0200_sprite_00_y,Y
+C - - - - - 0x0024EE 00:E4DE: 99 04 02  STA ram_0204_sprite_01_y,Y
 C - - - - - 0x0024F1 00:E4E1: 18        CLC
 C - - - - - 0x0024F2 00:E4E2: 69 08     ADC #$08
-C - - - - - 0x0024F4 00:E4E4: 99 08 02  STA ram_0208,Y
-C - - - - - 0x0024F7 00:E4E7: 99 0C 02  STA ram_020C,Y
+C - - - - - 0x0024F4 00:E4E4: 99 08 02  STA ram_0208_sprite_02_y,Y
+C - - - - - 0x0024F7 00:E4E7: 99 0C 02  STA ram_020C_sprite_03_y,Y
 C - - - - - 0x0024FA 00:E4EA: A9 F0     LDA #$F0
-C - - - - - 0x0024FC 00:E4EC: 99 10 02  STA ram_0210,Y
-C - - - - - 0x0024FF 00:E4EF: 99 14 02  STA ram_0214,Y
+C - - - - - 0x0024FC 00:E4EC: 99 10 02  STA ram_0210_sprite_04_y,Y
+C - - - - - 0x0024FF 00:E4EF: 99 14 02  STA ram_0214_sprite_05_y,Y
 C - - - - - 0x002502 00:E4F2: B5 91     LDA ram_0091_object_x_pos_int_p1,X
-C - - - - - 0x002504 00:E4F4: 99 03 02  STA ram_0203,Y
-C - - - - - 0x002507 00:E4F7: 99 0B 02  STA ram_020B,Y
+C - - - - - 0x002504 00:E4F4: 99 03 02  STA ram_0203_sprite_00_x,Y
+C - - - - - 0x002507 00:E4F7: 99 0B 02  STA ram_020B_sprite_02_x,Y
 C - - - - - 0x00250A 00:E4FA: 18        CLC
 C - - - - - 0x00250B 00:E4FB: 69 08     ADC #$08
-C - - - - - 0x00250D 00:E4FD: 99 07 02  STA ram_0207,Y
-C - - - - - 0x002510 00:E500: 99 0F 02  STA ram_020F,Y
+C - - - - - 0x00250D 00:E4FD: 99 07 02  STA ram_0207_sprite_01_x,Y
+C - - - - - 0x002510 00:E500: 99 0F 02  STA ram_020F_sprite_03_x,Y
 C - - - - - 0x002513 00:E503: B5 9A     LDA ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002515 00:E505: C9 D0     CMP #$D0
 C - - - - - 0x002517 00:E507: A9 03     LDA #$03
 C - - - - - 0x002519 00:E509: 90 02     BCC bra_E50D
 C - - - - - 0x00251B 00:E50B: A9 23     LDA #$23
 bra_E50D:
-C - - - - - 0x00251D 00:E50D: 99 02 02  STA ram_0202,Y
+C - - - - - 0x00251D 00:E50D: 99 02 02  STA ram_0202_sprite_00_attributes,Y
 C - - - - - 0x002520 00:E510: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x002522 00:E512: D0 3F     BNE bra_E553
-C - - - - - 0x002524 00:E514: B9 02 02  LDA ram_0202,Y
-C - - - - - 0x002527 00:E517: 99 06 02  STA ram_0206,Y
-C - - - - - 0x00252A 00:E51A: 99 0A 02  STA ram_020A,Y
-C - - - - - 0x00252D 00:E51D: 99 0E 02  STA ram_020E,Y
+C - - - - - 0x002524 00:E514: B9 02 02  LDA ram_0202_sprite_00_attributes,Y
+C - - - - - 0x002527 00:E517: 99 06 02  STA ram_0206_sprite_01_attributes,Y
+C - - - - - 0x00252A 00:E51A: 99 0A 02  STA ram_020A_sprite_02_attributes,Y
+C - - - - - 0x00252D 00:E51D: 99 0E 02  STA ram_020E_sprite_03_attributes,Y
 C - - - - - 0x002530 00:E520: A9 DA     LDA #$DA
-C - - - - - 0x002532 00:E522: 99 01 02  STA ram_0201,Y
+C - - - - - 0x002532 00:E522: 99 01 02  STA ram_0201_sprite_00_tile,Y
 C - - - - - 0x002535 00:E525: A9 DB     LDA #$DB
-C - - - - - 0x002537 00:E527: 99 05 02  STA ram_0205,Y
+C - - - - - 0x002537 00:E527: 99 05 02  STA ram_0205_sprite_01_tile,Y
 C - - - - - 0x00253A 00:E52A: A9 DC     LDA #$DC
-C - - - - - 0x00253C 00:E52C: 99 09 02  STA ram_0209,Y
+C - - - - - 0x00253C 00:E52C: 99 09 02  STA ram_0209_sprite_02_tile,Y
 C - - - - - 0x00253F 00:E52F: A9 DD     LDA #$DD
-C - - - - - 0x002541 00:E531: 99 0D 02  STA ram_020D,Y
+C - - - - - 0x002541 00:E531: 99 0D 02  STA ram_020D_sprite_03_tile,Y
 C - - - - - 0x002544 00:E534: A6 1F     LDX ram_001F_gfx_enemy_data_pointer_1f
 C - - - - - 0x002546 00:E536: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x002548 00:E538: 29 20     AND #$20
@@ -6392,30 +6393,30 @@ C - - - - - 0x00254A 00:E53A: F0 14     BEQ bra_E550
 C - - - - - 0x00254C 00:E53C: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x00254E 00:E53E: 29 40     AND #$40
 C - - - - - 0x002550 00:E540: D0 08     BNE bra_E54A
-C - - - - - 0x002552 00:E542: FE 00 02  INC ram_0200_oam_buffer,X
-C - - - - - 0x002555 00:E545: FE 04 02  INC ram_0204,X
+C - - - - - 0x002552 00:E542: FE 00 02  INC ram_0200_sprite_00_y,X
+C - - - - - 0x002555 00:E545: FE 04 02  INC ram_0204_sprite_01_y,X
 C - - - - - 0x002558 00:E548: D0 06     BNE bra_E550
 bra_E54A:
-C - - - - - 0x00255A 00:E54A: FE 03 02  INC ram_0203,X
-C - - - - - 0x00255D 00:E54D: FE 0B 02  INC ram_020B,X
+C - - - - - 0x00255A 00:E54A: FE 03 02  INC ram_0203_sprite_00_x,X
+C - - - - - 0x00255D 00:E54D: FE 0B 02  INC ram_020B_sprite_02_x,X
 bra_E550:
 C - - - - - 0x002560 00:E550: 68        PLA
 C - - - - - 0x002561 00:E551: AA        TAX
 C - - - - - 0x002562 00:E552: 60        RTS
 bra_E553:
-C - - - - - 0x002563 00:E553: B9 02 02  LDA ram_0202,Y
+C - - - - - 0x002563 00:E553: B9 02 02  LDA ram_0202_sprite_00_attributes,Y
 C - - - - - 0x002566 00:E556: 09 40     ORA #$40
-C - - - - - 0x002568 00:E558: 99 06 02  STA ram_0206,Y
+C - - - - - 0x002568 00:E558: 99 06 02  STA ram_0206_sprite_01_attributes,Y
 C - - - - - 0x00256B 00:E55B: 09 80     ORA #$80
-C - - - - - 0x00256D 00:E55D: 99 0E 02  STA ram_020E,Y
+C - - - - - 0x00256D 00:E55D: 99 0E 02  STA ram_020E_sprite_03_attributes,Y
 C - - - - - 0x002570 00:E560: 29 BF     AND #$BF
-C - - - - - 0x002572 00:E562: 99 0A 02  STA ram_020A,Y
+C - - - - - 0x002572 00:E562: 99 0A 02  STA ram_020A_sprite_02_attributes,Y
 C - - - - - 0x002575 00:E565: A9 DE     LDA #$DE
-C - - - - - 0x002577 00:E567: 99 01 02  STA ram_0201,Y
-C - - - - - 0x00257A 00:E56A: 99 05 02  STA ram_0205,Y
-C - - - - - 0x00257D 00:E56D: 99 09 02  STA ram_0209,Y
-C - - - - - 0x002580 00:E570: 99 0D 02  STA ram_020D,Y
-C - - - - - 0x002583 00:E573: DE 5A 04  DEC ram_045A,X
+C - - - - - 0x002577 00:E567: 99 01 02  STA ram_0201_sprite_00_tile,Y
+C - - - - - 0x00257A 00:E56A: 99 05 02  STA ram_0205_sprite_01_tile,Y
+C - - - - - 0x00257D 00:E56D: 99 09 02  STA ram_0209_sprite_02_tile,Y
+C - - - - - 0x002580 00:E570: 99 0D 02  STA ram_020D_sprite_03_tile,Y
+C - - - - - 0x002583 00:E573: DE 5A 04  DEC ram_045A_shock_timer_p1,X
 C - - - - - 0x002586 00:E576: 10 0C     BPL bra_E584
 C - - - - - 0x002588 00:E578: A9 FF     LDA #$FF
 C - - - - - 0x00258A 00:E57A: 95 88     STA ram_0088_object_balloons_p1,X
@@ -6438,7 +6439,7 @@ C - - - - - 0x0025A5 00:E595: A0 00     LDY #$00
 C - - - - - 0x0025A7 00:E597: A2 00     LDX #$00
 bra_E599:
 C - - - - - 0x0025A9 00:E599: B1 1D     LDA (ram_001D_loading_pointer_1d),Y
-C - - - - - 0x0025AB 00:E59B: 9D E0 02  STA ram_02E0,X
+C - - - - - 0x0025AB 00:E59B: 9D E0 02  STA ram_02E0_sprite_38_y,X
 C - - - - - 0x0025AE 00:E59E: C8        INY
 C - - - - - 0x0025AF 00:E59F: E8        INX
 C - - - - - 0x0025B0 00:E5A0: C9 F0     CMP #$F0
@@ -6451,10 +6452,10 @@ C - - - - - 0x0025B7 00:E5A7: E0 10     CPX #$10
 C - - - - - 0x0025B9 00:E5A9: D0 EE     BNE bra_E599
 C - - - - - 0x0025BB 00:E5AB: A0 0F     LDY #$0F
 bra_E5AD:
-C - - - - - 0x0025BD 00:E5AD: B9 E0 02  LDA ram_02E0,Y
+C - - - - - 0x0025BD 00:E5AD: B9 E0 02  LDA ram_02E0_sprite_38_y,Y
 C - - - - - 0x0025C0 00:E5B0: 18        CLC
 C - - - - - 0x0025C1 00:E5B1: 65 BC     ADC ram_00BC
-C - - - - - 0x0025C3 00:E5B3: 99 E0 02  STA ram_02E0,Y
+C - - - - - 0x0025C3 00:E5B3: 99 E0 02  STA ram_02E0_sprite_38_y,Y
 C - - - - - 0x0025C6 00:E5B6: 88        DEY
 C - - - - - 0x0025C7 00:E5B7: 88        DEY
 C - - - - - 0x0025C8 00:E5B8: 88        DEY
@@ -6711,10 +6712,10 @@ C - - - - - 0x0026C2 00:E6B2: A5 F1     LDA ram_00F1_sfx_2
 C - - - - - 0x0026C4 00:E6B4: 09 20     ORA #$20                                                   ; Play SFX
 C - - - - - 0x0026C6 00:E6B6: 85 F1     STA ram_00F1_sfx_2
 bra_E6B8:
-C - - - - - 0x0026C8 00:E6B8: DE 3F 04  DEC ram_043F,X                                             ; Object's ? != 0
+C - - - - - 0x0026C8 00:E6B8: DE 3F 04  DEC ram_043F_animation_f_timer_p1,X                        ; Object's Frame Timer != 0
 C - - - - - 0x0026CB 00:E6BB: D0 1C     BNE bra_E6D9
-C - - - - - 0x0026CD 00:E6BD: A9 03     LDA #$03                                                   ; Object's ? = 3
-C - - - - - 0x0026CF 00:E6BF: 9D 3F 04  STA ram_043F,X
+C - - - - - 0x0026CD 00:E6BD: A9 03     LDA #$03                                                   ; Object's Frame Timer = 3
+C - - - - - 0x0026CF 00:E6BF: 9D 3F 04  STA ram_043F_animation_f_timer_p1,X
 C - - - - - 0x0026D2 00:E6C2: E0 02     CPX #$02                                                   ; Object is not Player
 C - - - - - 0x0026D4 00:E6C4: B0 08     BCS bra_E6CE
 C - - - - - 0x0026D6 00:E6C6: D6 BF     DEC ram_00BF_p1_invincibility_time,X                       ; Player Invincibility Handle
@@ -6762,13 +6763,13 @@ C - - - - - 0x00271D 00:E70D: 09 40     ORA #$40                                
 C - - - - - 0x00271F 00:E70F: 95 31     STA ram_0031,X                                             ; (B Button)
 C - - - - - 0x002721 00:E711: 60        RTS
 bra_E712:
-C - - - - - 0x002722 00:E712: DE 5A 04  DEC ram_045A,X
+C - - - - - 0x002722 00:E712: DE 5A 04  DEC ram_045A_shock_timer_p1,X
 C - - - - - 0x002725 00:E715: D0 ED     BNE bra_E704_RTS                                           ; then return
 C - - - - - 0x002727 00:E717: 20 B3 F1  JSR sub_F1B3_RNG
-C - - - - - 0x00272A 00:E71A: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x00272A 00:E71A: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x00272D 00:E71D: 39 62 E7  AND tbl_E762,Y
 C - - - - - 0x002730 00:E720: 79 65 E7  ADC tbl_E762 + 3,Y
-C - - - - - 0x002733 00:E723: 9D 5A 04  STA ram_045A,X
+C - - - - - 0x002733 00:E723: 9D 5A 04  STA ram_045A_shock_timer_p1,X
 C - - - - - 0x002736 00:E726: 86 12     STX ram_0012_temp
 C - - - - - 0x002738 00:E728: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x00273A 00:E72A: 2A        ROL
@@ -6842,8 +6843,8 @@ C - - - - - 0x0027A6 00:E796: B5 88     LDA ram_0088_object_balloons_p1,X       
 C - - - - - 0x0027A8 00:E798: D0 09     BNE bra_E7A3                                               ; then continue
 bra_E79A:
 C - - - - - 0x0027AA 00:E79A: A9 00     LDA #$00                                                   ; If no Balloons:
-C - - - - - 0x0027AC 00:E79C: 9D 24 04  STA ram_0424_x_vel_frac,X                                  ; X Velocity = 0
-C - - - - - 0x0027AF 00:E79F: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x0027AC 00:E79C: 9D 24 04  STA ram_0424_x_vel_frac_p1,X                               ; X Velocity = 0
+C - - - - - 0x0027AF 00:E79F: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0027B2 00:E7A2: 60        RTS                                                        ; Return
 bra_E7A3:
 C - - - - - 0x0027B3 00:E7A3: C9 02     CMP #$02                                                   ; If 2 Balloons
@@ -6854,9 +6855,9 @@ C - - - - - 0x0027BB 00:E7AB: B5 7F     LDA ram_007F_object_status_p1,X         
 C - - - - - 0x0027BD 00:E7AD: C9 02     CMP #$02                                                   ; then zero X Velocity
 C - - - - - 0x0027BF 00:E7AF: B0 E9     BCS bra_E79A
 sub_E7B1:
-C - - - - - 0x0027C1 00:E7B1: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x0027C1 00:E7B1: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x0027C4 00:E7B4: 85 12     STA ram_0012_temp
-C - - - - - 0x0027C6 00:E7B6: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x0027C6 00:E7B6: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0027C9 00:E7B9: 85 13     STA ram_0013_temp
 C - - - - - 0x0027CB 00:E7BB: 20 A6 F1  JSR sub_F1A6
 C - - - - - 0x0027CE 00:E7BE: BD 63 04  LDA ram_0463,X
@@ -6869,13 +6870,13 @@ C - - - - - 0x0027DC 00:E7CC: 65 13     ADC ram_0013_temp
 C - - - - - 0x0027DE 00:E7CE: 9D 6C 04  STA ram_046C,X
 C - - - - - 0x0027E1 00:E7D1: 85 13     STA ram_0013_temp
 C - - - - - 0x0027E3 00:E7D3: 20 A6 F1  JSR sub_F1A6
-C - - - - - 0x0027E6 00:E7D6: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x0027E6 00:E7D6: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x0027E9 00:E7D9: 38        SEC
 C - - - - - 0x0027EA 00:E7DA: E5 12     SBC ram_0012_temp
-C - - - - - 0x0027EC 00:E7DC: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x0027EF 00:E7DF: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x0027EC 00:E7DC: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x0027EF 00:E7DF: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0027F2 00:E7E2: E5 13     SBC ram_0013_temp
-C - - - - - 0x0027F4 00:E7E4: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x0027F4 00:E7E4: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0027F7 00:E7E7: 60        RTS
 bra_E7E8:
 C - - - - - 0x0027F8 00:E7E8: B5 7F     LDA ram_007F_object_status_p1,X
@@ -6889,14 +6890,14 @@ C - - - - - 0x002803 00:E7F3: D0 1C     BNE bra_E811
 C - - - - - 0x002805 00:E7F5: B5 31     LDA ram_0031,X
 C - - - - - 0x002807 00:E7F7: 29 02     AND #$02
 C - - - - - 0x002809 00:E7F9: F0 07     BEQ bra_E802
-C - - - - - 0x00280B 00:E7FB: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00280B 00:E7FB: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x00280E 00:E7FE: F0 11     BEQ bra_E811
 C - - - - - 0x002810 00:E800: D0 0B     BNE bra_E80D
 bra_E802:
 C - - - - - 0x002812 00:E802: B5 31     LDA ram_0031,X
 C - - - - - 0x002814 00:E804: 29 01     AND #$01
 C - - - - - 0x002816 00:E806: F0 09     BEQ bra_E811
-C - - - - - 0x002818 00:E808: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x002818 00:E808: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x00281B 00:E80B: D0 04     BNE bra_E811
 bra_E80D:
 C - - - - - 0x00281D 00:E80D: A9 05     LDA #$05
@@ -6916,7 +6917,7 @@ C - - - - - 0x002833 00:E823: 29 01     AND #$01
 C - - - - - 0x002835 00:E825: F0 07     BEQ bra_E82E
 C - - - - - 0x002837 00:E827: A9 01     LDA #$01
 bra_E829:
-C - - - - - 0x002839 00:E829: DD 48 04  CMP ram_0448_direction,X
+C - - - - - 0x002839 00:E829: DD 48 04  CMP ram_0448_direction_p1,X
 C - - - - - 0x00283C 00:E82C: F0 04     BEQ bra_E832
 bra_E82E:
 C - - - - - 0x00283E 00:E82E: A9 04     LDA #$04
@@ -6928,14 +6929,14 @@ C - - - - - 0x002846 00:E836: 90 1C     BCC bra_E854
 C - - - - - 0x002848 00:E838: B5 31     LDA ram_0031,X
 C - - - - - 0x00284A 00:E83A: 29 02     AND #$02
 C - - - - - 0x00284C 00:E83C: F0 07     BEQ bra_E845
-C - - - - - 0x00284E 00:E83E: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00284E 00:E83E: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x002851 00:E841: D0 11     BNE bra_E854
 C - - - - - 0x002853 00:E843: F0 0B     BEQ bra_E850
 bra_E845:
 C - - - - - 0x002855 00:E845: B5 31     LDA ram_0031,X
 C - - - - - 0x002857 00:E847: 29 01     AND #$01
 C - - - - - 0x002859 00:E849: F0 09     BEQ bra_E854
-C - - - - - 0x00285B 00:E84B: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00285B 00:E84B: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x00285E 00:E84E: F0 04     BEQ bra_E854
 bra_E850:
 C - - - - - 0x002860 00:E850: A9 02     LDA #$02
@@ -6964,30 +6965,30 @@ C - - - - - 0x002886 00:E876: 29 01     AND #$01
 C - - - - - 0x002888 00:E878: F0 05     BEQ bra_E87F
 C - - - - - 0x00288A 00:E87A: A9 01     LDA #$01
 bra_E87C:
-C - - - - - 0x00288C 00:E87C: 9D 48 04  STA ram_0448_direction,X
+C - - - - - 0x00288C 00:E87C: 9D 48 04  STA ram_0448_direction_p1,X
 bra_E87F:
 C - - - - - 0x00288F 00:E87F: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x002891 00:E881: C9 04     CMP #$04
 C - - - - - 0x002893 00:E883: 90 33     BCC bra_E8B8
-C - - - - - 0x002895 00:E885: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x002895 00:E885: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x002898 00:E888: C9 01     CMP #$01
 C - - - - - 0x00289A 00:E88A: D0 2C     BNE bra_E8B8
-C - - - - - 0x00289C 00:E88C: BC 51 04  LDY ram_0451_object_type,X
-C - - - - - 0x00289F 00:E88F: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00289C 00:E88C: BC 51 04  LDY ram_0451_object_type_p1,X
+C - - - - - 0x00289F 00:E88F: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x0028A2 00:E892: F0 12     BEQ bra_E8A6
-C - - - - - 0x0028A4 00:E894: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x0028A4 00:E894: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x0028A7 00:E897: 38        SEC
 C - - - - - 0x0028A8 00:E898: F9 25 E6  SBC tbl_E625,Y
-C - - - - - 0x0028AB 00:E89B: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x0028AE 00:E89E: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x0028AB 00:E89B: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x0028AE 00:E89E: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0028B1 00:E8A1: E9 00     SBC #$00
 C - - - - - 0x0028B3 00:E8A3: 4C 01 E9  JMP loc_E901
 bra_E8A6:
-C - - - - - 0x0028B6 00:E8A6: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x0028B6 00:E8A6: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x0028B9 00:E8A9: 18        CLC
 C - - - - - 0x0028BA 00:E8AA: 79 25 E6  ADC tbl_E625,Y
-C - - - - - 0x0028BD 00:E8AD: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x0028C0 00:E8B0: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x0028BD 00:E8AD: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x0028C0 00:E8B0: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0028C3 00:E8B3: 69 00     ADC #$00
 C - - - - - 0x0028C5 00:E8B5: 4C 01 E9  JMP loc_E901
 bra_E8B8:
@@ -6999,96 +7000,96 @@ C - - - - - 0x0028D0 00:E8C0: C9 03     CMP #$03
 C - - - - - 0x0028D2 00:E8C2: F0 03     BEQ bra_E8C7
 C - - - - - 0x0028D4 00:E8C4: 4C 51 E9  JMP loc_E951
 bra_E8C7:
-C - - - - - 0x0028D7 00:E8C7: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x0028D7 00:E8C7: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x0028DA 00:E8CA: C9 01     CMP #$01
 C - - - - - 0x0028DC 00:E8CC: F0 03     BEQ bra_E8D1
 C - - - - - 0x0028DE 00:E8CE: 4C 51 E9  JMP loc_E951
 bra_E8D1:
-C - - - - - 0x0028E1 00:E8D1: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x0028E1 00:E8D1: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x0028E4 00:E8D4: B5 31     LDA ram_0031,X
 C - - - - - 0x0028E6 00:E8D6: 29 02     AND #$02
 C - - - - - 0x0028E8 00:E8D8: F0 12     BEQ bra_E8EC
-C - - - - - 0x0028EA 00:E8DA: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x0028EA 00:E8DA: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x0028ED 00:E8DD: 38        SEC
 C - - - - - 0x0028EE 00:E8DE: F9 19 E6  SBC tbl_E619,Y
-C - - - - - 0x0028F1 00:E8E1: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x0028F4 00:E8E4: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x0028F1 00:E8E1: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x0028F4 00:E8E4: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0028F7 00:E8E7: E9 00     SBC #$00
 C - - - - - 0x0028F9 00:E8E9: 4C 01 E9  JMP loc_E901
 bra_E8EC:
 C - - - - - 0x0028FC 00:E8EC: B5 31     LDA ram_0031,X
 C - - - - - 0x0028FE 00:E8EE: 29 01     AND #$01
 C - - - - - 0x002900 00:E8F0: F0 5F     BEQ bra_E951
-C - - - - - 0x002902 00:E8F2: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x002902 00:E8F2: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002905 00:E8F5: 18        CLC
 C - - - - - 0x002906 00:E8F6: 79 19 E6  ADC tbl_E619,Y
-C - - - - - 0x002909 00:E8F9: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x00290C 00:E8FC: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002909 00:E8F9: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x00290C 00:E8FC: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x00290F 00:E8FF: 69 00     ADC #$00
 loc_E901:
-C D 3 - - - 0x002911 00:E901: 9D 2D 04  STA ram_042D_x_vel_int,X
+C D 3 - - - 0x002911 00:E901: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002914 00:E904: 4C 51 E9  JMP loc_E951
 bra_E907:
-C - - - - - 0x002917 00:E907: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x002917 00:E907: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x00291A 00:E90A: C9 01     CMP #$01
 C - - - - - 0x00291C 00:E90C: D0 43     BNE bra_E951
-C - - - - - 0x00291E 00:E90E: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x00291E 00:E90E: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x002921 00:E911: B5 31     LDA ram_0031,X
 C - - - - - 0x002923 00:E913: 29 02     AND #$02
 C - - - - - 0x002925 00:E915: F0 12     BEQ bra_E929
-C - - - - - 0x002927 00:E917: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x002927 00:E917: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x00292A 00:E91A: 38        SEC
 C - - - - - 0x00292B 00:E91B: F9 25 E6  SBC tbl_E625,Y
-C - - - - - 0x00292E 00:E91E: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x002931 00:E921: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x00292E 00:E91E: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x002931 00:E921: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002934 00:E924: E9 00     SBC #$00
 C - - - - - 0x002936 00:E926: 4C 3E E9  JMP loc_E93E
 bra_E929:
 C - - - - - 0x002939 00:E929: B5 31     LDA ram_0031,X
 C - - - - - 0x00293B 00:E92B: 29 01     AND #$01
 C - - - - - 0x00293D 00:E92D: F0 22     BEQ bra_E951
-C - - - - - 0x00293F 00:E92F: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x00293F 00:E92F: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002942 00:E932: 18        CLC
 C - - - - - 0x002943 00:E933: 79 25 E6  ADC tbl_E625,Y
-C - - - - - 0x002946 00:E936: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x002949 00:E939: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002946 00:E936: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x002949 00:E939: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x00294C 00:E93C: 69 00     ADC #$00
 loc_E93E:
-C D 3 - - - 0x00294E 00:E93E: 9D 2D 04  STA ram_042D_x_vel_int,X
+C D 3 - - - 0x00294E 00:E93E: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002951 00:E941: B5 31     LDA ram_0031,X
 C - - - - - 0x002953 00:E943: 29 03     AND #$03
 C - - - - - 0x002955 00:E945: F0 0A     BEQ bra_E951
 C - - - - - 0x002957 00:E947: E0 02     CPX #$02
 C - - - - - 0x002959 00:E949: B0 06     BCS bra_E951
 C - - - - - 0x00295B 00:E94B: A5 F0     LDA ram_00F0_sfx_1
-C - - - - - 0x00295D 00:E94D: 09 08     ORA #$08
+C - - - - - 0x00295D 00:E94D: 09 08     ORA #$08                                                   ; Play Walk SFX
 C - - - - - 0x00295F 00:E94F: 85 F0     STA ram_00F0_sfx_1
 bra_E951:
 loc_E951:
 C D 3 - - - 0x002961 00:E951: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x002963 00:E953: C9 04     CMP #$04
 C - - - - - 0x002965 00:E955: 90 2B     BCC bra_E982_RTS
-C - - - - - 0x002967 00:E957: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x002967 00:E957: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x00296A 00:E95A: D0 07     BNE bra_E963
-C - - - - - 0x00296C 00:E95C: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x00296C 00:E95C: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x00296F 00:E95F: 30 21     BMI bra_E982_RTS
 C - - - - - 0x002971 00:E961: 10 05     BPL bra_E968
 bra_E963:
-C - - - - - 0x002973 00:E963: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002973 00:E963: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002976 00:E966: 10 1A     BPL bra_E982_RTS
 bra_E968:
 C - - - - - 0x002978 00:E968: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x00297A 00:E96A: C9 05     CMP #$05
 C - - - - - 0x00297C 00:E96C: D0 08     BNE bra_E976
-C - - - - - 0x00297E 00:E96E: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x00297E 00:E96E: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x002981 00:E971: 49 01     EOR #$01
-C - - - - - 0x002983 00:E973: 9D 48 04  STA ram_0448_direction,X
+C - - - - - 0x002983 00:E973: 9D 48 04  STA ram_0448_direction_p1,X
 bra_E976:
 C - - - - - 0x002986 00:E976: A9 03     LDA #$03
 C - - - - - 0x002988 00:E978: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x00298A 00:E97A: A9 00     LDA #$00
-C - - - - - 0x00298C 00:E97C: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x00298F 00:E97F: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x00298C 00:E97C: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x00298F 00:E97F: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 bra_E982_RTS:
 C - - - - - 0x002992 00:E982: 60        RTS
 sub_E983:
@@ -7117,13 +7118,13 @@ C - - - - - 0x0029BA 00:E9AA: C9 06     CMP #$06
 C - - - - - 0x0029BC 00:E9AC: B0 44     BCS bra_E9F2_RTS
 C - - - - - 0x0029BE 00:E9AE: A9 01     LDA #$01
 C - - - - - 0x0029C0 00:E9B0: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x0029C2 00:E9B2: 9D 5A 04  STA ram_045A,X
+C - - - - - 0x0029C2 00:E9B2: 9D 5A 04  STA ram_045A_shock_timer_p1,X
 C - - - - - 0x0029C5 00:E9B5: 60        RTS
 bra_E9B6:
 C - - - - - 0x0029C6 00:E9B6: A9 00     LDA #$00
-C - - - - - 0x0029C8 00:E9B8: 9D 12 04  STA ram_0412_y_vel_frac,X
-C - - - - - 0x0029CB 00:E9BB: 9D 1B 04  STA ram_041B_y_vel_int,X
-C - - - - - 0x0029CE 00:E9BE: 9D 09 04  STA ram_0409_y_pos_frac,X
+C - - - - - 0x0029C8 00:E9B8: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
+C - - - - - 0x0029CB 00:E9BB: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
+C - - - - - 0x0029CE 00:E9BE: 9D 09 04  STA ram_0409_y_pos_frac_p1,X
 C - - - - - 0x0029D1 00:E9C1: 85 CB     STA ram_00CB
 C - - - - - 0x0029D3 00:E9C3: E0 02     CPX #$02
 C - - - - - 0x0029D5 00:E9C5: 90 36     BCC bra_E9FD
@@ -7138,10 +7139,10 @@ C - - - - - 0x0029E5 00:E9D5: B0 1B     BCS bra_E9F2_RTS
 C - - - - - 0x0029E7 00:E9D7: A9 02     LDA #$02
 C - - - - - 0x0029E9 00:E9D9: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x0029EB 00:E9DB: A5 C6     LDA ram_00C6
-C - - - - - 0x0029ED 00:E9DD: 9D 3F 04  STA ram_043F,X
+C - - - - - 0x0029ED 00:E9DD: 9D 3F 04  STA ram_043F_animation_f_timer_p1,X
 C - - - - - 0x0029F0 00:E9E0: A9 00     LDA #$00
-C - - - - - 0x0029F2 00:E9E2: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x0029F5 00:E9E5: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x0029F2 00:E9E2: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x0029F5 00:E9E5: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x0029F8 00:E9E8: 9D 63 04  STA ram_0463,X
 C - - - - - 0x0029FB 00:E9EB: 9D 6C 04  STA ram_046C,X
 C - - - - - 0x0029FE 00:E9EE: A9 40     LDA #$40                                                   ; Play SFX
@@ -7152,7 +7153,7 @@ bra_E9F3:
 C - - - - - 0x002A03 00:E9F3: A9 00     LDA #$00
 C - - - - - 0x002A05 00:E9F5: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x002A07 00:E9F7: A9 01     LDA #$01
-C - - - - - 0x002A09 00:E9F9: 9D 5A 04  STA ram_045A,X
+C - - - - - 0x002A09 00:E9F9: 9D 5A 04  STA ram_045A_shock_timer_p1,X
 C - - - - - 0x002A0C 00:E9FC: 60        RTS
 bra_E9FD:
 C - - - - - 0x002A0D 00:E9FD: B5 7F     LDA ram_007F_object_status_p1,X
@@ -7160,8 +7161,8 @@ C - - - - - 0x002A0F 00:E9FF: C9 01     CMP #$01
 C - - - - - 0x002A11 00:EA01: D0 14     BNE bra_EA17_RTS
 C - - - - - 0x002A13 00:EA03: C9 06     CMP #$06
 C - - - - - 0x002A15 00:EA05: B0 10     BCS bra_EA17_RTS
-C - - - - - 0x002A17 00:EA07: BD 24 04  LDA ram_0424_x_vel_frac,X
-C - - - - - 0x002A1A 00:EA0A: 1D 2D 04  ORA ram_042D_x_vel_int,X
+C - - - - - 0x002A17 00:EA07: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x002A1A 00:EA0A: 1D 2D 04  ORA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002A1D 00:EA0D: D0 04     BNE bra_EA13
 C - - - - - 0x002A1F 00:EA0F: A9 03     LDA #$03
 C - - - - - 0x002A21 00:EA11: D0 02     BNE bra_EA15
@@ -7200,11 +7201,11 @@ C - - - - - 0x002A4E 00:EA3E: A5 19     LDA ram_0019_f_counter                  
 C - - - - - 0x002A50 00:EA40: 29 07     AND #$07                                                   ; every 8 frames
 C - - - - - 0x002A52 00:EA42: D0 03     BNE bra_EA47
 bra_EA44:
-C - - - - - 0x002A54 00:EA44: FE 36 04  INC ram_0436_animation_f,X                                 ; Increment Animation Frame
+C - - - - - 0x002A54 00:EA44: FE 36 04  INC ram_0436_animation_f_p1,X                              ; Increment Animation Frame
 bra_EA47:
-C - - - - - 0x002A57 00:EA47: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x002A57 00:EA47: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x002A5A 00:EA4A: 29 03     AND #$03                                                   ; Stay within Frame 0 to 3
-C - - - - - 0x002A5C 00:EA4C: 9D 36 04  STA ram_0436_animation_f,X
+C - - - - - 0x002A5C 00:EA4C: 9D 36 04  STA ram_0436_animation_f_p1,X
 C - - - - - 0x002A5F 00:EA4F: D0 06     BNE bra_EA57_RTS
 C - - - - - 0x002A61 00:EA51: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x002A63 00:EA53: D0 02     BNE bra_EA57_RTS                                           ; Increment Status if not 0
@@ -7212,9 +7213,9 @@ C - - - - - 0x002A65 00:EA55: F6 7F     INC ram_007F_object_status_p1,X
 bra_EA57_RTS:
 C - - - - - 0x002A67 00:EA57: 60        RTS
 sub_EA58:
-C - - - - - 0x002A68 00:EA58: BD 75 04  LDA ram_0475,X
+C - - - - - 0x002A68 00:EA58: BD 75 04  LDA ram_0475_invulnerability_p1,X
 C - - - - - 0x002A6B 00:EA5B: F0 03     BEQ bra_EA60
-C - - - - - 0x002A6D 00:EA5D: DE 75 04  DEC ram_0475,X
+C - - - - - 0x002A6D 00:EA5D: DE 75 04  DEC ram_0475_invulnerability_p1,X
 bra_EA60:
 C - - - - - 0x002A70 00:EA60: E0 02     CPX #$02
 C - - - - - 0x002A72 00:EA62: B0 28     BCS bra_EA8C
@@ -7223,56 +7224,56 @@ C - - - - - 0x002A76 00:EA66: F0 24     BEQ bra_EA8C
 C - - - - - 0x002A78 00:EA68: A5 19     LDA ram_0019_f_counter
 C - - - - - 0x002A7A 00:EA6A: 4A        LSR
 C - - - - - 0x002A7B 00:EA6B: 90 1E     BCC bra_EA8B_RTS
-C - - - - - 0x002A7D 00:EA6D: FE 36 04  INC ram_0436_animation_f,X
-C - - - - - 0x002A80 00:EA70: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x002A7D 00:EA6D: FE 36 04  INC ram_0436_animation_f_p1,X
+C - - - - - 0x002A80 00:EA70: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x002A83 00:EA73: 29 03     AND #$03
-C - - - - - 0x002A85 00:EA75: 9D 36 04  STA ram_0436_animation_f,X
+C - - - - - 0x002A85 00:EA75: 9D 36 04  STA ram_0436_animation_f_p1,X
 C - - - - - 0x002A88 00:EA78: A9 01     LDA #$01
 C - - - - - 0x002A8A 00:EA7A: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x002A8C 00:EA7C: DE 5A 04  DEC ram_045A,X
+C - - - - - 0x002A8C 00:EA7C: DE 5A 04  DEC ram_045A_shock_timer_p1,X
 C - - - - - 0x002A8F 00:EA7F: D0 0A     BNE bra_EA8B_RTS
 C - - - - - 0x002A91 00:EA81: A9 00     LDA #$00
 C - - - - - 0x002A93 00:EA83: 95 C1     STA ram_00C1_p1_freeze_flag,X
 C - - - - - 0x002A95 00:EA85: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x002A97 00:EA87: A9 20     LDA #$20
-C - - - - - 0x002A99 00:EA89: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x002A97 00:EA87: A9 20     LDA #$20                                                   ; \ Play Fall SFX
+C - - - - - 0x002A99 00:EA89: 85 F0     STA ram_00F0_sfx_1                                         ; /
 bra_EA8B_RTS:
 C - - - - - 0x002A9B 00:EA8B: 60        RTS
 bra_EA8C:
-C - - - - - 0x002A9C 00:EA8C: BD 12 04  LDA ram_0412_y_vel_frac,X
+C - - - - - 0x002A9C 00:EA8C: BD 12 04  LDA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002A9F 00:EA8F: 18        CLC
-C - - - - - 0x002AA0 00:EA90: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x002AA0 00:EA90: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x002AA3 00:EA93: 79 01 E6  ADC tbl_E601,Y
-C - - - - - 0x002AA6 00:EA96: 9D 12 04  STA ram_0412_y_vel_frac,X
+C - - - - - 0x002AA6 00:EA96: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002AA9 00:EA99: 90 03     BCC bra_EA9E
-C - - - - - 0x002AAB 00:EA9B: FE 1B 04  INC ram_041B_y_vel_int,X
+C - - - - - 0x002AAB 00:EA9B: FE 1B 04  INC ram_041B_y_vel_int_p1,X
 bra_EA9E:
-C - - - - - 0x002AAE 00:EA9E: BD 1B 04  LDA ram_041B_y_vel_int,X
+C - - - - - 0x002AAE 00:EA9E: BD 1B 04  LDA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002AB1 00:EAA1: 30 1E     BMI bra_EAC1
 C - - - - - 0x002AB3 00:EAA3: D9 6D E6  CMP tbl_E66D,Y
 C - - - - - 0x002AB6 00:EAA6: 90 34     BCC bra_EADC
 C - - - - - 0x002AB8 00:EAA8: D0 08     BNE bra_EAB2
-C - - - - - 0x002ABA 00:EAAA: BD 12 04  LDA ram_0412_y_vel_frac,X
+C - - - - - 0x002ABA 00:EAAA: BD 12 04  LDA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002ABD 00:EAAD: D9 61 E6  CMP tbl_E661,Y
 C - - - - - 0x002AC0 00:EAB0: 90 2A     BCC bra_EADC
 bra_EAB2:
 C - - - - - 0x002AC2 00:EAB2: B9 61 E6  LDA tbl_E661,Y
-C - - - - - 0x002AC5 00:EAB5: 9D 12 04  STA ram_0412_y_vel_frac,X
+C - - - - - 0x002AC5 00:EAB5: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002AC8 00:EAB8: B9 6D E6  LDA tbl_E66D,Y
-C - - - - - 0x002ACB 00:EABB: 9D 1B 04  STA ram_041B_y_vel_int,X
+C - - - - - 0x002ACB 00:EABB: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002ACE 00:EABE: 4C DC EA  JMP loc_EADC
 bra_EAC1:
 C - - - - - 0x002AD1 00:EAC1: D9 85 E6  CMP tbl_E685,Y
 C - - - - - 0x002AD4 00:EAC4: 90 0A     BCC bra_EAD0
 C - - - - - 0x002AD6 00:EAC6: D0 14     BNE bra_EADC
-C - - - - - 0x002AD8 00:EAC8: BD 12 04  LDA ram_0412_y_vel_frac,X
+C - - - - - 0x002AD8 00:EAC8: BD 12 04  LDA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002ADB 00:EACB: D9 79 E6  CMP tbl_E679,Y
 C - - - - - 0x002ADE 00:EACE: B0 0C     BCS bra_EADC
 bra_EAD0:
 C - - - - - 0x002AE0 00:EAD0: B9 79 E6  LDA tbl_E679,Y
-C - - - - - 0x002AE3 00:EAD3: 9D 12 04  STA ram_0412_y_vel_frac,X
+C - - - - - 0x002AE3 00:EAD3: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002AE6 00:EAD6: B9 85 E6  LDA tbl_E685,Y
-C - - - - - 0x002AE9 00:EAD9: 9D 1B 04  STA ram_041B_y_vel_int,X
+C - - - - - 0x002AE9 00:EAD9: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
 bra_EADC:
 loc_EADC:
 C D 3 - - - 0x002AEC 00:EADC: 20 A0 EB  JSR sub_EBA0_Object_Apply_Y_Velocity
@@ -7292,41 +7293,41 @@ C - - - - - 0x002B07 00:EAF7: A9 80     LDA #$80
 C - - - - - 0x002B09 00:EAF9: 95 88     STA ram_0088_object_balloons_p1,X
 C - - - - - 0x002B0B 00:EAFB: A9 00     LDA #$00
 C - - - - - 0x002B0D 00:EAFD: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x002B0F 00:EAFF: A9 01     LDA #$01
-C - - - - - 0x002B11 00:EB01: 85 F3     STA ram_00F3_sfx_3
+C - - - - - 0x002B0F 00:EAFF: A9 01     LDA #$01                                                   ; \ Play Bubble Rising SFX
+C - - - - - 0x002B11 00:EB01: 85 F3     STA ram_00F3_sfx_3                                         ; /
 C - - - - - 0x002B13 00:EB03: D0 08     BNE bra_EB0D
 bra_EB05:
 C - - - - - 0x002B15 00:EB05: A5 C8     LDA ram_00C8_phase_type
 C - - - - - 0x002B17 00:EB07: D0 04     BNE bra_EB0D
-C - - - - - 0x002B19 00:EB09: A9 40     LDA #$40
-C - - - - - 0x002B1B 00:EB0B: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x002B19 00:EB09: A9 40     LDA #$40                                                   ; \ Play Splash SFX
+C - - - - - 0x002B1B 00:EB0B: 85 F0     STA ram_00F0_sfx_1                                         ; /
 bra_EB0D:
-C - - - - - 0x002B1D 00:EB0D: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002B1D 00:EB0D: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002B20 00:EB10: 30 1E     BMI bra_EB30
 C - - - - - 0x002B22 00:EB12: D9 3D E6  CMP tbl_E63D,Y
 C - - - - - 0x002B25 00:EB15: 90 34     BCC bra_EB4B
 C - - - - - 0x002B27 00:EB17: D0 08     BNE bra_EB21
-C - - - - - 0x002B29 00:EB19: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x002B29 00:EB19: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002B2C 00:EB1C: D9 31 E6  CMP tbl_E631,Y
 C - - - - - 0x002B2F 00:EB1F: 90 2A     BCC bra_EB4B
 bra_EB21:
 C - - - - - 0x002B31 00:EB21: B9 31 E6  LDA tbl_E631,Y
-C - - - - - 0x002B34 00:EB24: 9D 24 04  STA ram_0424_x_vel_frac,X
+C - - - - - 0x002B34 00:EB24: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002B37 00:EB27: B9 3D E6  LDA tbl_E63D,Y
-C - - - - - 0x002B3A 00:EB2A: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x002B3A 00:EB2A: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002B3D 00:EB2D: 4C 4B EB  JMP loc_EB4B
 bra_EB30:
 C - - - - - 0x002B40 00:EB30: D9 55 E6  CMP tbl_E655,Y
 C - - - - - 0x002B43 00:EB33: 90 0A     BCC bra_EB3F
 C - - - - - 0x002B45 00:EB35: D0 14     BNE bra_EB4B
-C - - - - - 0x002B47 00:EB37: BD 24 04  LDA ram_0424_x_vel_frac,X
+C - - - - - 0x002B47 00:EB37: BD 24 04  LDA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002B4A 00:EB3A: D9 49 E6  CMP tbl_E649,Y
 C - - - - - 0x002B4D 00:EB3D: B0 0C     BCS bra_EB4B
 bra_EB3F:
 C - - - - - 0x002B4F 00:EB3F: B9 49 E6  LDA tbl_E649,Y
-C - - - - - 0x002B52 00:EB42: 9D 24 04  STA ram_0424_x_vel_frac,X
+C - - - - - 0x002B52 00:EB42: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002B55 00:EB45: B9 55 E6  LDA tbl_E655,Y
-C - - - - - 0x002B58 00:EB48: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x002B58 00:EB48: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 bra_EB4B:
 loc_EB4B:
 C D 3 - - - 0x002B5B 00:EB4B: 20 8E EB  JSR sub_EB8E_Object_Apply_X_Velocity
@@ -7352,35 +7353,35 @@ C - - - - - 0x002B7C 00:EB6C: C9 C8     CMP #$C8
 C - - - - - 0x002B7E 00:EB6E: 90 1D     BCC bra_EB8D_RTS
 C - - - - - 0x002B80 00:EB70: A9 C7     LDA #$C7
 C - - - - - 0x002B82 00:EB72: 95 9A     STA ram_009A_object_y_pos_int_p1,X
-C - - - - - 0x002B84 00:EB74: BD 51 04  LDA ram_0451_object_type,X
+C - - - - - 0x002B84 00:EB74: BD 51 04  LDA ram_0451_object_type_p1,X
 C - - - - - 0x002B87 00:EB77: C9 0B     CMP #$0B
 C - - - - - 0x002B89 00:EB79: D0 09     BNE bra_EB84
-C - - - - - 0x002B8B 00:EB7B: DE 51 04  DEC ram_0451_object_type,X
+C - - - - - 0x002B8B 00:EB7B: DE 51 04  DEC ram_0451_object_type_p1,X
 C - - - - - 0x002B8E 00:EB7E: 20 07 F1  JSR sub_F107_Reverse_Y_Velocity
 C - - - - - 0x002B91 00:EB81: 4C 8C F1  JMP loc_F18C
 bra_EB84:
 C - - - - - 0x002B94 00:EB84: A9 02     LDA #$02
 C - - - - - 0x002B96 00:EB86: 95 88     STA ram_0088_object_balloons_p1,X
 C - - - - - 0x002B98 00:EB88: A9 03     LDA #$03
-C - - - - - 0x002B9A 00:EB8A: 9D 51 04  STA ram_0451_object_type,X
+C - - - - - 0x002B9A 00:EB8A: 9D 51 04  STA ram_0451_object_type_p1,X
 bra_EB8D_RTS:
 C - - - - - 0x002B9D 00:EB8D: 60        RTS
 sub_EB8E_Object_Apply_X_Velocity:
 C - - - - - 0x002B9E 00:EB8E: BD 00 04  LDA ram_0400_x_pos_frac_p1,X                               ; \
 C - - - - - 0x002BA1 00:EB91: 18        CLC                                                        ; | Apply Velocity to
-C - - - - - 0x002BA2 00:EB92: 7D 24 04  ADC ram_0424_x_vel_frac,X                                  ; | X Position (Frac)
+C - - - - - 0x002BA2 00:EB92: 7D 24 04  ADC ram_0424_x_vel_frac_p1,X                               ; | X Position (Frac)
 C - - - - - 0x002BA5 00:EB95: 9D 00 04  STA ram_0400_x_pos_frac_p1,X                               ; /
 C - - - - - 0x002BA8 00:EB98: B5 91     LDA ram_0091_object_x_pos_int_p1,X                         ; \ Apply Velocity to
-C - - - - - 0x002BAA 00:EB9A: 7D 2D 04  ADC ram_042D_x_vel_int,X                                   ; | X Position (Int)
+C - - - - - 0x002BAA 00:EB9A: 7D 2D 04  ADC ram_042D_x_vel_int_p1,X                                ; | X Position (Int)
 C - - - - - 0x002BAD 00:EB9D: 95 91     STA ram_0091_object_x_pos_int_p1,X                         ; /
 C - - - - - 0x002BAF 00:EB9F: 60        RTS
 sub_EBA0_Object_Apply_Y_Velocity:
-C - - - - - 0x002BB0 00:EBA0: BD 09 04  LDA ram_0409_y_pos_frac,X                                  ; \
+C - - - - - 0x002BB0 00:EBA0: BD 09 04  LDA ram_0409_y_pos_frac_p1,X                               ; \
 C - - - - - 0x002BB3 00:EBA3: 18        CLC                                                        ; | Apply Velocity to
-C - - - - - 0x002BB4 00:EBA4: 7D 12 04  ADC ram_0412_y_vel_frac,X                                  ; | Y Position (Frac)
-C - - - - - 0x002BB7 00:EBA7: 9D 09 04  STA ram_0409_y_pos_frac,X                                  ; /
+C - - - - - 0x002BB4 00:EBA4: 7D 12 04  ADC ram_0412_y_vel_frac_p1,X                               ; | Y Position (Frac)
+C - - - - - 0x002BB7 00:EBA7: 9D 09 04  STA ram_0409_y_pos_frac_p1,X                               ; /
 C - - - - - 0x002BBA 00:EBAA: B5 9A     LDA ram_009A_object_y_pos_int_p1,X                         ; \ Apply Velocity to
-C - - - - - 0x002BBC 00:EBAC: 7D 1B 04  ADC ram_041B_y_vel_int,X                                   ; | Y Position (Int)
+C - - - - - 0x002BBC 00:EBAC: 7D 1B 04  ADC ram_041B_y_vel_int_p1,X                                ; | Y Position (Int)
 C - - - - - 0x002BBF 00:EBAF: 95 9A     STA ram_009A_object_y_pos_int_p1,X                         ; /
 C - - - - - 0x002BC1 00:EBB1: 60        RTS
 sub_EBB2:
@@ -7396,7 +7397,7 @@ C - - - - - 0x002BD4 00:EBC4: E0 02     CPX #$02                                
 C - - - - - 0x002BD6 00:EBC6: B0 1B     BCS bra_EBE3                                               ; /
 C - - - - - 0x002BD8 00:EBC8: B5 88     LDA ram_0088_object_balloons_p1,X                          ; \ If Player still has Balloons
 C - - - - - 0x002BDA 00:EBCA: D0 0A     BNE bra_EBD6                                               ; /
-C - - - - - 0x002BDC 00:EBCC: BD 36 04  LDA ram_0436_animation_f,X                                 ; \ If Player Animation Frame != 0
+C - - - - - 0x002BDC 00:EBCC: BD 36 04  LDA ram_0436_animation_f_p1,X                              ; \ If Player Animation Frame != 0
 C - - - - - 0x002BDF 00:EBCF: D0 05     BNE bra_EBD6                                               ; /
 C - - - - - 0x002BE1 00:EBD1: A9 00     LDA #$00                                                   ; \ Then Player Status = 0 (Dead)
 C - - - - - 0x002BE3 00:EBD3: 95 7F     STA ram_007F_object_status_p1,X                            ; /
@@ -7415,7 +7416,7 @@ bra_EBE3:
 C - - - - - 0x002BF3 00:EBE3: B5 88     LDA ram_0088_object_balloons_p1,X                          ; \ If Enemy Status == 2
 C - - - - - 0x002BF5 00:EBE5: C9 02     CMP #$02                                                   ; | Then ?
 C - - - - - 0x002BF7 00:EBE7: F0 4F     BEQ bra_EC38                                               ; /
-C - - - - - 0x002BF9 00:EBE9: BD 36 04  LDA ram_0436_animation_f,X                                 ; \ If Enemy Animation Frames != 0
+C - - - - - 0x002BF9 00:EBE9: BD 36 04  LDA ram_0436_animation_f_p1,X                              ; \ If Enemy Animation Frames != 0
 C - - - - - 0x002BFC 00:EBEC: D0 0F     BNE bra_EBFD_RTS                                           ; / Then
 C - - - - - 0x002BFE 00:EBEE: B5 88     LDA ram_0088_object_balloons_p1,X                          ; \ If Enemy Status != 0
 C - - - - - 0x002C00 00:EBF0: D0 05     BNE bra_EBF7                                               ; / Then
@@ -7431,10 +7432,10 @@ C - - - - - 0x002C0D 00:EBFD: 60        RTS
 bra_EBFE:
 C - - - - - 0x002C0E 00:EBFE: C9 02     CMP #$02                                                   ; If Player
 C - - - - - 0x002C10 00:EC00: 90 FB     BCC bra_EBFD_RTS                                           ; then return
-C - - - - - 0x002C12 00:EC02: DE 5A 04  DEC ram_045A,X
+C - - - - - 0x002C12 00:EC02: DE 5A 04  DEC ram_045A_shock_timer_p1,X
 C - - - - - 0x002C15 00:EC05: D0 30     BNE bra_EC37_RTS
 C - - - - - 0x002C17 00:EC07: A5 C7     LDA ram_00C7
-C - - - - - 0x002C19 00:EC09: 9D 5A 04  STA ram_045A,X
+C - - - - - 0x002C19 00:EC09: 9D 5A 04  STA ram_045A_shock_timer_p1,X
 C - - - - - 0x002C1C 00:EC0C: F6 7F     INC ram_007F_object_status_p1,X
 C - - - - - 0x002C1E 00:EC0E: B5 7F     LDA ram_007F_object_status_p1,X
 C - - - - - 0x002C20 00:EC10: C9 07     CMP #$07
@@ -7443,17 +7444,17 @@ C - - - - - 0x002C24 00:EC14: A9 02     LDA #$02
 C - - - - - 0x002C26 00:EC16: 95 88     STA ram_0088_object_balloons_p1,X
 C - - - - - 0x002C28 00:EC18: A9 00     LDA #$00
 C - - - - - 0x002C2A 00:EC1A: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x002C2C 00:EC1C: BC 51 04  LDY ram_0451_object_type,X                                 ; Check Object Type
+C - - - - - 0x002C2C 00:EC1C: BC 51 04  LDY ram_0451_object_type_p1,X                              ; Check Object Type
 C - - - - - 0x002C2F 00:EC1F: B9 AE EC  LDA tbl_ECAE,Y
-C - - - - - 0x002C32 00:EC22: BC 7E 04  LDY ram_047E,X
+C - - - - - 0x002C32 00:EC22: BC 7E 04  LDY ram_047E_popped_p1,X
 C - - - - - 0x002C35 00:EC25: D0 08     BNE bra_EC2F
-C - - - - - 0x002C37 00:EC27: DE 7E 04  DEC ram_047E,X
-C - - - - - 0x002C3A 00:EC2A: BD 51 04  LDA ram_0451_object_type,X
+C - - - - - 0x002C37 00:EC27: DE 7E 04  DEC ram_047E_popped_p1,X
+C - - - - - 0x002C3A 00:EC2A: BD 51 04  LDA ram_0451_object_type_p1,X
 C - - - - - 0x002C3D 00:EC2D: 29 03     AND #$03
 bra_EC2F:
-C - - - - - 0x002C3F 00:EC2F: 9D 51 04  STA ram_0451_object_type,X
+C - - - - - 0x002C3F 00:EC2F: 9D 51 04  STA ram_0451_object_type_p1,X
 C - - - - - 0x002C42 00:EC32: A9 FE     LDA #$FE
-C - - - - - 0x002C44 00:EC34: 9D 1B 04  STA ram_041B_y_vel_int,X
+C - - - - - 0x002C44 00:EC34: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
 bra_EC37_RTS:
 C - - - - - 0x002C47 00:EC37: 60        RTS
 bra_EC38:
@@ -7485,19 +7486,19 @@ C - - - - - 0x002C75 00:EC65: 90 0E     BCC bra_EC75
 C - - - - - 0x002C77 00:EC67: D6 9A     DEC ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002C79 00:EC69: D6 9A     DEC ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002C7B 00:EC6B: A9 00     LDA #$00
-C - - - - - 0x002C7D 00:EC6D: 9D 12 04  STA ram_0412_y_vel_frac,X
-C - - - - - 0x002C80 00:EC70: 9D 1B 04  STA ram_041B_y_vel_int,X
+C - - - - - 0x002C7D 00:EC6D: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
+C - - - - - 0x002C80 00:EC70: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002C83 00:EC73: F0 09     BEQ bra_EC7E
 bra_EC75:
 C - - - - - 0x002C85 00:EC75: C9 01     CMP #$01
 C - - - - - 0x002C87 00:EC77: F0 05     BEQ bra_EC7E
-C - - - - - 0x002C89 00:EC79: BD 36 04  LDA ram_0436_animation_f,X
+C - - - - - 0x002C89 00:EC79: BD 36 04  LDA ram_0436_animation_f_p1,X
 C - - - - - 0x002C8C 00:EC7C: D0 2F     BNE bra_ECAD_RTS                                           ; Return
 bra_EC7E:
 C - - - - - 0x002C8E 00:EC7E: A9 00     LDA #$00
 C - - - - - 0x002C90 00:EC80: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x002C92 00:EC82: A9 01     LDA #$01
-C - - - - - 0x002C94 00:EC84: 9D 36 04  STA ram_0436_animation_f,X
+C - - - - - 0x002C94 00:EC84: 9D 36 04  STA ram_0436_animation_f_p1,X
 C - - - - - 0x002C97 00:EC87: A9 01     LDA #$01
 C - - - - - 0x002C99 00:EC89: 9D 20 06  STA ram_0620,X
 C - - - - - 0x002C9C 00:EC8C: A0 00     LDY #$00
@@ -7506,15 +7507,15 @@ C - - - - - 0x002CA0 00:EC90: 90 01     BCC bra_EC93
 C - - - - - 0x002CA2 00:EC92: C8        INY
 bra_EC93:
 C - - - - - 0x002CA3 00:EC93: B9 F0 00  LDA ram_00F0_sfx_1,Y
-C - - - - - 0x002CA6 00:EC96: 09 10     ORA #$10
+C - - - - - 0x002CA6 00:EC96: 09 10     ORA #$10                                                   ; Play Flutter SFX
 C - - - - - 0x002CA8 00:EC98: 99 F0 00  STA ram_00F0_sfx_1,Y
-C - - - - - 0x002CAB 00:EC9B: BD 12 04  LDA ram_0412_y_vel_frac,X
+C - - - - - 0x002CAB 00:EC9B: BD 12 04  LDA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002CAE 00:EC9E: 38        SEC
-C - - - - - 0x002CAF 00:EC9F: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x002CAF 00:EC9F: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x002CB2 00:ECA2: F9 0D E6  SBC tbl_E60D,Y
-C - - - - - 0x002CB5 00:ECA5: 9D 12 04  STA ram_0412_y_vel_frac,X
+C - - - - - 0x002CB5 00:ECA5: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
 C - - - - - 0x002CB8 00:ECA8: B0 03     BCS bra_ECAD_RTS
-C - - - - - 0x002CBA 00:ECAA: DE 1B 04  DEC ram_041B_y_vel_int,X
+C - - - - - 0x002CBA 00:ECAA: DE 1B 04  DEC ram_041B_y_vel_int_p1,X
 bra_ECAD_RTS:
 C - - - - - 0x002CBD 00:ECAD: 60        RTS
 tbl_ECAE:
@@ -7535,10 +7536,10 @@ C - - - - - 0x002CCA 00:ECBA: B5 7F     LDA ram_007F_object_status_p1,X         
 C - - - - - 0x002CCC 00:ECBC: D0 69     BNE bra_ED27_RTS                                           ; / then don't do anything
 C - - - - - 0x002CCE 00:ECBE: 20 B1 E7  JSR sub_E7B1
 C - - - - - 0x002CD1 00:ECC1: 20 8E EB  JSR sub_EB8E_Object_Apply_X_Velocity
-C - - - - - 0x002CD4 00:ECC4: BD 09 04  LDA ram_0409_y_pos_frac,X
+C - - - - - 0x002CD4 00:ECC4: BD 09 04  LDA ram_0409_y_pos_frac_p1,X
 C - - - - - 0x002CD7 00:ECC7: 38        SEC
 C - - - - - 0x002CD8 00:ECC8: E9 60     SBC #$60
-C - - - - - 0x002CDA 00:ECCA: 9D 09 04  STA ram_0409_y_pos_frac,X
+C - - - - - 0x002CDA 00:ECCA: 9D 09 04  STA ram_0409_y_pos_frac_p1,X
 C - - - - - 0x002CDD 00:ECCD: B5 9A     LDA ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002CDF 00:ECCF: E9 00     SBC #$00
 C - - - - - 0x002CE1 00:ECD1: 95 9A     STA ram_009A_object_y_pos_int_p1,X
@@ -7569,11 +7570,11 @@ C - - - - - 0x002D0E 00:ECFE: B0 22     BCS bra_ED22
 C - - - - - 0x002D10 00:ED00: A9 FF     LDA #$FF
 C - - - - - 0x002D12 00:ED02: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x002D14 00:ED04: A9 03     LDA #$03
-C - - - - - 0x002D16 00:ED06: 9D 5A 04  STA ram_045A,X
+C - - - - - 0x002D16 00:ED06: 9D 5A 04  STA ram_045A_shock_timer_p1,X
 C - - - - - 0x002D19 00:ED09: A9 78     LDA #$78
 C - - - - - 0x002D1B 00:ED0B: 85 C5     STA ram_00C5_lock_scroll_time
-C - - - - - 0x002D1D 00:ED0D: A9 02     LDA #$02
-C - - - - - 0x002D1F 00:ED0F: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x002D1D 00:ED0D: A9 02     LDA #$02                                                   ; \ Play Balloon Pop SFX
+C - - - - - 0x002D1F 00:ED0F: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x002D21 00:ED11: A9 32     LDA #$32
 C - - - - - 0x002D23 00:ED13: 84 3E     STY ram_003E_score_id_update
 C - - - - - 0x002D25 00:ED15: 20 DE D6  JSR sub_D6DE_Score_Add
@@ -7600,7 +7601,7 @@ bra_ED2E:
 C - - - - - 0x002D3E 00:ED2E: B5 9A     LDA ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002D40 00:ED30: C9 F9     CMP #$F9
 C - - - - - 0x002D42 00:ED32: 90 0C     BCC bra_ED40
-C - - - - - 0x002D44 00:ED34: BD 1B 04  LDA ram_041B_y_vel_int,X
+C - - - - - 0x002D44 00:ED34: BD 1B 04  LDA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002D47 00:ED37: 10 F4     BPL bra_ED2D_RTS
 C - - - - - 0x002D49 00:ED39: A9 00     LDA #$00
 C - - - - - 0x002D4B 00:ED3B: 85 CC     STA ram_00CC_collision_related
@@ -7686,7 +7687,7 @@ C - - - - - 0x002DD0 00:EDC0: 60        RTS
 bra_EDC1:
 C - - - - - 0x002DD1 00:EDC1: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x002DD3 00:EDC3: 90 11     BCC bra_EDD6
-C - - - - - 0x002DD5 00:EDC5: BD 1B 04  LDA ram_041B_y_vel_int,X
+C - - - - - 0x002DD5 00:EDC5: BD 1B 04  LDA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002DD8 00:EDC8: 30 0C     BMI bra_EDD6
 C - - - - - 0x002DDA 00:EDCA: B1 27     LDA (ram_0027_plat_coll_pointer_top),Y
 C - - - - - 0x002DDC 00:EDCC: E9 18     SBC #$18
@@ -7697,7 +7698,7 @@ C - - - - - 0x002DE4 00:EDD4: 85 CB     STA ram_00CB
 bra_EDD6:
 C - - - - - 0x002DE6 00:EDD6: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x002DE8 00:EDD8: 90 1A     BCC bra_EDF4
-C - - - - - 0x002DEA 00:EDDA: BD 1B 04  LDA ram_041B_y_vel_int,X
+C - - - - - 0x002DEA 00:EDDA: BD 1B 04  LDA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002DED 00:EDDD: 10 15     BPL bra_EDF4
 C - - - - - 0x002DEF 00:EDDF: B1 29     LDA (ram_0029_plat_coll_pointer_bottom),Y
 loc_EDE1:
@@ -7713,23 +7714,23 @@ C - - - - - 0x002E02 00:EDF2: D0 30     BNE bra_EE24_RTS
 bra_EDF4:
 C - - - - - 0x002E04 00:EDF4: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x002E06 00:EDF6: 90 07     BCC bra_EDFF
-C - - - - - 0x002E08 00:EDF8: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002E08 00:EDF8: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002E0B 00:EDFB: 30 02     BMI bra_EDFF
 C - - - - - 0x002E0D 00:EDFD: 10 09     BPL bra_EE08
 bra_EDFF:
 C - - - - - 0x002E0F 00:EDFF: 46 CC     LSR ram_00CC_collision_related
 C - - - - - 0x002E11 00:EE01: 90 21     BCC bra_EE24_RTS
-C - - - - - 0x002E13 00:EE03: BD 2D 04  LDA ram_042D_x_vel_int,X
+C - - - - - 0x002E13 00:EE03: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002E16 00:EE06: 10 1C     BPL bra_EE24_RTS
 bra_EE08:
 C - - - - - 0x002E18 00:EE08: 20 DE F0  JSR sub_F0DE_Reverse_X_Velocity
 C - - - - - 0x002E1B 00:EE0B: 20 72 F1  JSR sub_F172
-C - - - - - 0x002E1E 00:EE0E: BD 2D 04  LDA ram_042D_x_vel_int,X
-C - - - - - 0x002E21 00:EE11: 1D 24 04  ORA ram_0424_x_vel_frac,X
+C - - - - - 0x002E1E 00:EE0E: BD 2D 04  LDA ram_042D_x_vel_int_p1,X
+C - - - - - 0x002E21 00:EE11: 1D 24 04  ORA ram_0424_x_vel_frac_p1,X
 C - - - - - 0x002E24 00:EE14: F0 0E     BEQ bra_EE24_RTS
-C - - - - - 0x002E26 00:EE16: BD 48 04  LDA ram_0448_direction,X
+C - - - - - 0x002E26 00:EE16: BD 48 04  LDA ram_0448_direction_p1,X
 C - - - - - 0x002E29 00:EE19: 49 01     EOR #$01
-C - - - - - 0x002E2B 00:EE1B: 9D 48 04  STA ram_0448_direction,X
+C - - - - - 0x002E2B 00:EE1B: 9D 48 04  STA ram_0448_direction_p1,X
 C - - - - - 0x002E2E 00:EE1E: A5 F1     LDA ram_00F1_sfx_2
 C - - - - - 0x002E30 00:EE20: 09 02     ORA #$02
 C - - - - - 0x002E32 00:EE22: 85 F1     STA ram_00F1_sfx_2
@@ -7892,7 +7893,7 @@ C - - - - - 0x002F4F 00:EF3F: 4C 43 F0  JMP loc_F043                            
 bra_EF42:
 C - - - - - 0x002F52 00:EF42: A9 00     LDA #$00
 C - - - - - 0x002F54 00:EF44: 8D 87 04  STA ram_0487
-C - - - - - 0x002F57 00:EF47: BD 75 04  LDA ram_0475,X
+C - - - - - 0x002F57 00:EF47: BD 75 04  LDA ram_0475_invulnerability_p1,X
 C - - - - - 0x002F5A 00:EF4A: F0 03     BEQ bra_EF4F
 C - - - - - 0x002F5C 00:EF4C: 4C 43 F0  JMP loc_F043                                               ; Skip
 bra_EF4F:
@@ -7922,10 +7923,10 @@ C - - - - - 0x002F88 00:EF78: D5 9A     CMP ram_009A_object_y_pos_int_p1,X
 C - - - - - 0x002F8A 00:EF7A: 90 03     BCC bra_EF7F
 C - - - - - 0x002F8C 00:EF7C: 4C 43 F0  JMP loc_F043                                               ; Skip
 bra_EF7F:
-C - - - - - 0x002F8F 00:EF7F: A9 14     LDA #$14
-C - - - - - 0x002F91 00:EF81: 9D 75 04  STA ram_0475,X
+C - - - - - 0x002F8F 00:EF7F: A9 14     LDA #$14                                                   ; #$14 ticks after Balloon is popped before vulnerable again
+C - - - - - 0x002F91 00:EF81: 9D 75 04  STA ram_0475_invulnerability_p1,X
 C - - - - - 0x002F94 00:EF84: A9 00     LDA #$00
-C - - - - - 0x002F96 00:EF86: 9D 36 04  STA ram_0436_animation_f,X
+C - - - - - 0x002F96 00:EF86: 9D 36 04  STA ram_0436_animation_f_p1,X
 C - - - - - 0x002F99 00:EF89: C0 02     CPY #$02
 C - - - - - 0x002F9B 00:EF8B: 90 0A     BCC bra_EF97
 C - - - - - 0x002F9D 00:EF8D: B9 88 00  LDA ram_0088_object_balloons_p1,Y
@@ -7934,7 +7935,7 @@ C - - - - - 0x002FA2 00:EF92: F0 03     BEQ bra_EF97
 C - - - - - 0x002FA4 00:EF94: 4C 43 F0  JMP loc_F043                                               ; Skip
 bra_EF97:
 C - - - - - 0x002FA7 00:EF97: A5 F0     LDA ram_00F0_sfx_1
-C - - - - - 0x002FA9 00:EF99: 09 02     ORA #$02
+C - - - - - 0x002FA9 00:EF99: 09 02     ORA #$02                                                   ; Play Balloon Pop SFX
 C - - - - - 0x002FAB 00:EF9B: 85 F0     STA ram_00F0_sfx_1
 C - - - - - 0x002FAD 00:EF9D: B5 88     LDA ram_0088_object_balloons_p1,X
 C - - - - - 0x002FAF 00:EF9F: C9 02     CMP #$02
@@ -7952,20 +7953,20 @@ C - - - - - 0x002FC2 00:EFB2: D0 03     BNE bra_EFB7
 bra_EFB7:
 C - - - - - 0x002FC7 00:EFB7: 95 7F     STA ram_007F_object_status_p1,X
 C - - - - - 0x002FC9 00:EFB9: A9 00     LDA #$00
-C - - - - - 0x002FCB 00:EFBB: 9D 36 04  STA ram_0436_animation_f,X
+C - - - - - 0x002FCB 00:EFBB: 9D 36 04  STA ram_0436_animation_f_p1,X
 C - - - - - 0x002FCE 00:EFBE: F0 2A     BEQ bra_EFEA
 bra_EFC0:
 C - - - - - 0x002FD0 00:EFC0: D6 88     DEC ram_0088_object_balloons_p1,X
 C - - - - - 0x002FD2 00:EFC2: D0 0A     BNE bra_EFCE
 C - - - - - 0x002FD4 00:EFC4: A9 FF     LDA #$FF
-C - - - - - 0x002FD6 00:EFC6: 9D 1B 04  STA ram_041B_y_vel_int,X
+C - - - - - 0x002FD6 00:EFC6: 9D 1B 04  STA ram_041B_y_vel_int_p1,X
 C - - - - - 0x002FD9 00:EFC9: A9 00     LDA #$00
-C - - - - - 0x002FDB 00:EFCB: 9D 12 04  STA ram_0412_y_vel_frac,X
+C - - - - - 0x002FDB 00:EFCB: 9D 12 04  STA ram_0412_y_vel_frac_p1,X
 bra_EFCE:
 C - - - - - 0x002FDE 00:EFCE: A9 00     LDA #$00
 C - - - - - 0x002FE0 00:EFD0: 95 7F     STA ram_007F_object_status_p1,X
-C - - - - - 0x002FE2 00:EFD2: 9D 24 04  STA ram_0424_x_vel_frac,X
-C - - - - - 0x002FE5 00:EFD5: 9D 2D 04  STA ram_042D_x_vel_int,X
+C - - - - - 0x002FE2 00:EFD2: 9D 24 04  STA ram_0424_x_vel_frac_p1,X
+C - - - - - 0x002FE5 00:EFD5: 9D 2D 04  STA ram_042D_x_vel_int_p1,X
 C - - - - - 0x002FE8 00:EFD8: B5 91     LDA ram_0091_object_x_pos_int_p1,X
 C - - - - - 0x002FEA 00:EFDA: 30 04     BMI bra_EFE0
 C - - - - - 0x002FEC 00:EFDC: A9 FF     LDA #$FF
@@ -7978,15 +7979,15 @@ C - - - - - 0x002FF5 00:EFE5: A9 80     LDA #$80
 C - - - - - 0x002FF7 00:EFE7: 9D 63 04  STA ram_0463,X
 bra_EFEA:
 C - - - - - 0x002FFA 00:EFEA: 84 12     STY ram_0012_temp
-C - - - - - 0x002FFC 00:EFEC: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x002FFC 00:EFEC: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x002FFF 00:EFEF: B9 5E F0  LDA tbl_F05E,Y
-C - - - - - 0x003002 00:EFF2: 9D 51 04  STA ram_0451_object_type,X
+C - - - - - 0x003002 00:EFF2: 9D 51 04  STA ram_0451_object_type_p1,X
 C - - - - - 0x003005 00:EFF5: A9 01     LDA #$01
-C - - - - - 0x003007 00:EFF7: 9D 7E 04  STA ram_047E,X
+C - - - - - 0x003007 00:EFF7: 9D 7E 04  STA ram_047E_popped_p1,X
 C - - - - - 0x00300A 00:EFFA: A4 12     LDY ram_0012_temp
 C - - - - - 0x00300C 00:EFFC: C0 02     CPY #$02
 C - - - - - 0x00300E 00:EFFE: B0 43     BCS bra_F043                                               ; Skip
-C - - - - - 0x003010 00:F000: BD 51 04  LDA ram_0451_object_type,X
+C - - - - - 0x003010 00:F000: BD 51 04  LDA ram_0451_object_type_p1,X
 C - - - - - 0x003013 00:F003: C9 07     CMP #$07
 C - - - - - 0x003015 00:F005: F0 0A     BEQ bra_F011
 C - - - - - 0x003017 00:F007: C9 08     CMP #$08
@@ -7995,7 +7996,7 @@ C - - - - - 0x00301B 00:F00B: A5 F1     LDA ram_00F1_sfx_2
 C - - - - - 0x00301D 00:F00D: 09 80     ORA #$80
 C - - - - - 0x00301F 00:F00F: 85 F1     STA ram_00F1_sfx_2
 bra_F011:
-C - - - - - 0x003021 00:F011: BC 51 04  LDY ram_0451_object_type,X
+C - - - - - 0x003021 00:F011: BC 51 04  LDY ram_0451_object_type_p1,X
 C - - - - - 0x003024 00:F014: B9 6A F0  LDA tbl_F06A,Y
 C - - - - - 0x003027 00:F017: 85 13     STA ram_0013_temp
 C - - - - - 0x003029 00:F019: AD 87 04  LDA ram_0487
@@ -8024,12 +8025,12 @@ C - - - - - 0x003051 00:F041: 68        PLA
 C - - - - - 0x003052 00:F042: A8        TAY
 bra_F043:
 loc_F043:
-C D 3 - - - 0x003053 00:F043: BD 51 04  LDA ram_0451_object_type,X                                 ; \ If Object X is not dead
+C D 3 - - - 0x003053 00:F043: BD 51 04  LDA ram_0451_object_type_p1,X                              ; \ If Object X is not dead
 C - - - - - 0x003056 00:F046: C9 0B     CMP #$0B                                                   ; | then don't play any SFX
 C - - - - - 0x003058 00:F048: D0 08     BNE bra_F052_RTS                                           ; /
 C - - - - - 0x00305A 00:F04A: A5 C8     LDA ram_00C8_phase_type                                    ; \ If it's Bonus Phase
 C - - - - - 0x00305C 00:F04C: D0 04     BNE bra_F052_RTS                                           ; / then don't play any SFX
-C - - - - - 0x00305E 00:F04E: A9 20     LDA #$20                                                   ; \ Play SFX
+C - - - - - 0x00305E 00:F04E: A9 20     LDA #$20                                                   ; \ Play Fall SFX
 C - - - - - 0x003060 00:F050: 85 F0     STA ram_00F0_sfx_1                                         ; /
 bra_F052_RTS:
 C - - - - - 0x003062 00:F052: 60        RTS
@@ -8107,18 +8108,18 @@ C - - - - - 0x0030A5 00:F095: 69 01     ADC #$01                                
 bra_F097_RTS:
 C - - - - - 0x0030A7 00:F097: 60        RTS                                                        ; /
 sub_F098:
-C - - - - - 0x0030A8 00:F098: B9 24 04  LDA ram_0424_x_vel_frac,Y                                  ; \ Object(y).XVelocityFrac - Object(x).XVelocityFrac
+C - - - - - 0x0030A8 00:F098: B9 24 04  LDA ram_0424_x_vel_frac_p1,Y                               ; \ Object(y).XVelocityFrac - Object(x).XVelocityFrac
 C - - - - - 0x0030AB 00:F09B: 38        SEC                                                        ; |
-C - - - - - 0x0030AC 00:F09C: FD 24 04  SBC ram_0424_x_vel_frac,X                                  ; /
-C - - - - - 0x0030AF 00:F09F: B9 2D 04  LDA ram_042D_x_vel_int,Y                                   ; \ Object(y).XVelocity - Object(x).XVelocity
-C - - - - - 0x0030B2 00:F0A2: FD 2D 04  SBC ram_042D_x_vel_int,X                                   ; /
+C - - - - - 0x0030AC 00:F09C: FD 24 04  SBC ram_0424_x_vel_frac_p1,X                               ; /
+C - - - - - 0x0030AF 00:F09F: B9 2D 04  LDA ram_042D_x_vel_int_p1,Y                                ; \ Object(y).XVelocity - Object(x).XVelocity
+C - - - - - 0x0030B2 00:F0A2: FD 2D 04  SBC ram_042D_x_vel_int_p1,X                                ; /
 C - - - - - 0x0030B5 00:F0A5: 60        RTS
 sub_F0A6:
-C - - - - - 0x0030B6 00:F0A6: B9 12 04  LDA ram_0412_y_vel_frac,Y                                  ; \ Object(y).YVelocityFrac - Object(x).YVelocityFrac
+C - - - - - 0x0030B6 00:F0A6: B9 12 04  LDA ram_0412_y_vel_frac_p1,Y                               ; \ Object(y).YVelocityFrac - Object(x).YVelocityFrac
 C - - - - - 0x0030B9 00:F0A9: 38        SEC                                                        ; |
-C - - - - - 0x0030BA 00:F0AA: FD 12 04  SBC ram_0412_y_vel_frac,X                                  ; /
-C - - - - - 0x0030BD 00:F0AD: B9 1B 04  LDA ram_041B_y_vel_int,Y                                   ; \ Object(y).YVelocity - Object(x).YVelocity
-C - - - - - 0x0030C0 00:F0B0: FD 1B 04  SBC ram_041B_y_vel_int,X                                   ; /
+C - - - - - 0x0030BA 00:F0AA: FD 12 04  SBC ram_0412_y_vel_frac_p1,X                               ; /
+C - - - - - 0x0030BD 00:F0AD: B9 1B 04  LDA ram_041B_y_vel_int_p1,Y                                ; \ Object(y).YVelocity - Object(x).YVelocity
+C - - - - - 0x0030C0 00:F0B0: FD 1B 04  SBC ram_041B_y_vel_int_p1,X                                ; /
 C - - - - - 0x0030C3 00:F0B3: 60        RTS
 sub_F0B4_Swap_X_Y:
 loc_F0B4_Swap_X_Y:
@@ -8148,11 +8149,11 @@ C - - - - - 0x0030ED 00:F0DD: 60        RTS
 sub_F0DE_Reverse_X_Velocity:
 C - - - - - 0x0030EE 00:F0DE: A9 00     LDA #$00                                                   ; \
 C - - - - - 0x0030F0 00:F0E0: 38        SEC                                                        ; |
-C - - - - - 0x0030F1 00:F0E1: FD 24 04  SBC ram_0424_x_vel_frac,X                                  ; | Reverse X Velocity of Object X
-C - - - - - 0x0030F4 00:F0E4: 9D 24 04  STA ram_0424_x_vel_frac,X                                  ; | (Bounce Horizontally)
+C - - - - - 0x0030F1 00:F0E1: FD 24 04  SBC ram_0424_x_vel_frac_p1,X                               ; | Reverse X Velocity of Object X
+C - - - - - 0x0030F4 00:F0E4: 9D 24 04  STA ram_0424_x_vel_frac_p1,X                               ; | (Bounce Horizontally)
 C - - - - - 0x0030F7 00:F0E7: A9 00     LDA #$00                                                   ; |
-C - - - - - 0x0030F9 00:F0E9: FD 2D 04  SBC ram_042D_x_vel_int,X                                   ; |
-C - - - - - 0x0030FC 00:F0EC: 9D 2D 04  STA ram_042D_x_vel_int,X                                   ; /
+C - - - - - 0x0030F9 00:F0E9: FD 2D 04  SBC ram_042D_x_vel_int_p1,X                                ; |
+C - - - - - 0x0030FC 00:F0EC: 9D 2D 04  STA ram_042D_x_vel_int_p1,X                                ; /
 C - - - - - 0x0030FF 00:F0EF: A9 00     LDA #$00                                                   ; \
 C - - - - - 0x003101 00:F0F1: 38        SEC                                                        ; | ?
 C - - - - - 0x003102 00:F0F2: FD 63 04  SBC ram_0463,X                                             ; |
@@ -8167,11 +8168,11 @@ C - - - - - 0x003116 00:F106: 60        RTS
 sub_F107_Reverse_Y_Velocity:
 C - - - - - 0x003117 00:F107: A9 00     LDA #$00                                                   ; \
 C - - - - - 0x003119 00:F109: 38        SEC                                                        ; |
-C - - - - - 0x00311A 00:F10A: FD 12 04  SBC ram_0412_y_vel_frac,X                                  ; | Reverse Y Velocity of Object X
-C - - - - - 0x00311D 00:F10D: 9D 12 04  STA ram_0412_y_vel_frac,X                                  ; | (Bounce Vertically)
+C - - - - - 0x00311A 00:F10A: FD 12 04  SBC ram_0412_y_vel_frac_p1,X                               ; | Reverse Y Velocity of Object X
+C - - - - - 0x00311D 00:F10D: 9D 12 04  STA ram_0412_y_vel_frac_p1,X                               ; | (Bounce Vertically)
 C - - - - - 0x003120 00:F110: A9 00     LDA #$00                                                   ; |
-C - - - - - 0x003122 00:F112: FD 1B 04  SBC ram_041B_y_vel_int,X                                   ; |
-C - - - - - 0x003125 00:F115: 9D 1B 04  STA ram_041B_y_vel_int,X                                   ; |
+C - - - - - 0x003122 00:F112: FD 1B 04  SBC ram_041B_y_vel_int_p1,X                                ; |
+C - - - - - 0x003125 00:F115: 9D 1B 04  STA ram_041B_y_vel_int_p1,X                                ; |
 C - - - - - 0x003128 00:F118: 60        RTS                                                        ; /
 sub_F119:
 C - - - - - 0x003129 00:F119: 85 2D     STA ram_002D
@@ -8228,29 +8229,29 @@ C - - - - - 0x00317F 00:F16F: 68        PLA                                     
 C - - - - - 0x003180 00:F170: AA        TAX                                                        ; /
 C - - - - - 0x003181 00:F171: 60        RTS
 sub_F172:
-C - - - - - 0x003182 00:F172: BD 24 04  LDA ram_0424_x_vel_frac,X                                  ; \ X Velocity Frac
+C - - - - - 0x003182 00:F172: BD 24 04  LDA ram_0424_x_vel_frac_p1,X                               ; \ X Velocity Frac
 C - - - - - 0x003185 00:F175: 85 2B     STA ram_002B_temp_y_vel_frac                               ; /
-C - - - - - 0x003187 00:F177: BD 2D 04  LDA ram_042D_x_vel_int,X                                   ; \ X Velocity Int
+C - - - - - 0x003187 00:F177: BD 2D 04  LDA ram_042D_x_vel_int_p1,X                                ; \ X Velocity Int
 C - - - - - 0x00318A 00:F17A: 85 2C     STA ram_002C_temp_y_vel_int                                ; /
 C - - - - - 0x00318C 00:F17C: A9 CD     LDA #$CD                                                   ; \ ?
 C - - - - - 0x00318E 00:F17E: 20 19 F1  JSR sub_F119                                               ; /
 C - - - - - 0x003191 00:F181: A5 2F     LDA ram_002F                                               ; \ Update X Velocity Frac
-C - - - - - 0x003193 00:F183: 9D 24 04  STA ram_0424_x_vel_frac,X                                  ; /
+C - - - - - 0x003193 00:F183: 9D 24 04  STA ram_0424_x_vel_frac_p1,X                               ; /
 C - - - - - 0x003196 00:F186: A5 30     LDA ram_0030                                               ; \ Update X Velocity Int
-C - - - - - 0x003198 00:F188: 9D 2D 04  STA ram_042D_x_vel_int,X                                   ; /
+C - - - - - 0x003198 00:F188: 9D 2D 04  STA ram_042D_x_vel_int_p1,X                                ; /
 C - - - - - 0x00319B 00:F18B: 60        RTS
 loc_F18C:
 sub_F18C:
-C D 3 - - - 0x00319C 00:F18C: BD 12 04  LDA ram_0412_y_vel_frac,X                                  ; \ Y Velocity Frac
+C D 3 - - - 0x00319C 00:F18C: BD 12 04  LDA ram_0412_y_vel_frac_p1,X                               ; \ Y Velocity Frac
 C - - - - - 0x00319F 00:F18F: 85 2B     STA ram_002B_temp_y_vel_frac                               ; /
-C - - - - - 0x0031A1 00:F191: BD 1B 04  LDA ram_041B_y_vel_int,X                                   ; \ Y Velocity Int
+C - - - - - 0x0031A1 00:F191: BD 1B 04  LDA ram_041B_y_vel_int_p1,X                                ; \ Y Velocity Int
 C - - - - - 0x0031A4 00:F194: 85 2C     STA ram_002C_temp_y_vel_int                                ; /
 C - - - - - 0x0031A6 00:F196: A9 CD     LDA #$CD                                                   ; \ ?
 C - - - - - 0x0031A8 00:F198: 20 19 F1  JSR sub_F119                                               ; /
 C - - - - - 0x0031AB 00:F19B: A5 2F     LDA ram_002F                                               ; \ Update Y Velocity Frac
-C - - - - - 0x0031AD 00:F19D: 9D 12 04  STA ram_0412_y_vel_frac,X                                  ; /
+C - - - - - 0x0031AD 00:F19D: 9D 12 04  STA ram_0412_y_vel_frac_p1,X                               ; /
 C - - - - - 0x0031B0 00:F1A0: A5 30     LDA ram_0030                                               ; \ Update Y Velocity Int
-C - - - - - 0x0031B2 00:F1A2: 9D 1B 04  STA ram_041B_y_vel_int,X                                   ; /
+C - - - - - 0x0031B2 00:F1A2: 9D 1B 04  STA ram_041B_y_vel_int_p1,X                                ; /
 C - - - - - 0x0031B5 00:F1A5: 60        RTS
 sub_F1A6:
 C - - - - - 0x0031B6 00:F1A6: A0 04     LDY #$04
@@ -8346,22 +8347,22 @@ bra_F238:
 C - - - - - 0x003248 00:F238: A2 07     LDX #$07                                                   ; \
 bra_F23A:
 C - - - - - 0x00324A 00:F23A: A9 00     LDA #$00                                                   ; | Initialize variables for each object (except Fish?)
-C - - - - - 0x00324C 00:F23C: 9D 48 04  STA ram_0448_direction,X                                   ; | - Direction (0 = Left, 1 = Right)
-C - - - - - 0x00324F 00:F23F: 9D 75 04  STA ram_0475,X                                             ; |
-C - - - - - 0x003252 00:F242: 9D 7E 04  STA ram_047E,X                                             ; |
-C - - - - - 0x003255 00:F245: 9D 24 04  STA ram_0424_x_vel_frac,X                                  ; | - X Velocity (Frac)
-C - - - - - 0x003258 00:F248: 9D 2D 04  STA ram_042D_x_vel_int,X                                   ; | - X Velocity (Int)
-C - - - - - 0x00325B 00:F24B: 9D 12 04  STA ram_0412_y_vel_frac,X                                  ; | - Y Velocity (Frac)
-C - - - - - 0x00325E 00:F24E: 9D 1B 04  STA ram_041B_y_vel_int,X                                   ; | - Y Velocity (Int)
-C - - - - - 0x003261 00:F251: 9D 63 04  STA ram_0463,X                                             ; |
-C - - - - - 0x003264 00:F254: 9D 6C 04  STA ram_046C,X                                             ; |
+C - - - - - 0x00324C 00:F23C: 9D 48 04  STA ram_0448_direction_p1,X                                ; | - Direction (0 = Left, 1 = Right)
+C - - - - - 0x00324F 00:F23F: 9D 75 04  STA ram_0475_invulnerability_p1,X                          ; | - Invulnerability
+C - - - - - 0x003252 00:F242: 9D 7E 04  STA ram_047E_popped_p1,X                                   ; | - Popped Flag (Enemy Can Level Up)
+C - - - - - 0x003255 00:F245: 9D 24 04  STA ram_0424_x_vel_frac_p1,X                               ; | - X Velocity (Frac)
+C - - - - - 0x003258 00:F248: 9D 2D 04  STA ram_042D_x_vel_int_p1,X                                ; | - X Velocity (Int)
+C - - - - - 0x00325B 00:F24B: 9D 12 04  STA ram_0412_y_vel_frac_p1,X                               ; | - Y Velocity (Frac)
+C - - - - - 0x00325E 00:F24E: 9D 1B 04  STA ram_041B_y_vel_int_p1,X                                ; | - Y Velocity (Int)
+C - - - - - 0x003261 00:F251: 9D 63 04  STA ram_0463,X                                             ; | - Related to bouncing back from enemy, balloon, or side
+C - - - - - 0x003264 00:F254: 9D 6C 04  STA ram_046C,X                                             ; | - Related to bouncing back from enemy, balloon, or side
 C - - - - - 0x003267 00:F257: 9D 00 04  STA ram_0400_x_pos_frac_p1,X                               ; | - X Positions (Frac)
-C - - - - - 0x00326A 00:F25A: 9D 09 04  STA ram_0409_y_pos_frac,X                                  ; | - Y Positions (Frac)
+C - - - - - 0x00326A 00:F25A: 9D 09 04  STA ram_0409_y_pos_frac_p1,X                               ; | - Y Positions (Frac)
 C - - - - - 0x00326D 00:F25D: A9 01     LDA #$01                                                   ; |
-C - - - - - 0x00326F 00:F25F: 9D 3F 04  STA ram_043F,X                                             ; |
-C - - - - - 0x003272 00:F262: 9D 5A 04  STA ram_045A,X                                             ; |
+C - - - - - 0x00326F 00:F25F: 9D 3F 04  STA ram_043F_animation_f_timer_p1,X                        ; | - Animation Frame Timer
+C - - - - - 0x003272 00:F262: 9D 5A 04  STA ram_045A_shock_timer_p1,X                              ; | - Shock Timer
 C - - - - - 0x003275 00:F265: A9 03     LDA #$03                                                   ; |
-C - - - - - 0x003277 00:F267: 9D 36 04  STA ram_0436_animation_f,X                                 ; | - Animation Frame
+C - - - - - 0x003277 00:F267: 9D 36 04  STA ram_0436_animation_f_p1,X                              ; | - Animation Frame
 C - - - - - 0x00327A 00:F26A: CA        DEX                                                        ; |
 C - - - - - 0x00327B 00:F26B: 10 CD     BPL bra_F23A                                               ; /
 C - - - - - 0x00327D 00:F26D: A2 05     LDX #$05                                                   ; \
@@ -8539,8 +8540,8 @@ bra_F3A1:
 C - - - - - 0x0033B1 00:F3A1: 95 C3     STA ram_00C3_p1_respawn_delay,X                            ; /
 C - - - - - 0x0033B3 00:F3A3: A9 00     LDA #$00
 C - - - - - 0x0033B5 00:F3A5: 95 C1     STA ram_00C1_p1_freeze_flag,X                              ; Clear Player X Freeze Flag
-C - - - - - 0x0033B7 00:F3A7: 9D 2D 04  STA ram_042D_x_vel_int,X                                   ; \ Set up Player X's X Velocity to $00
-C - - - - - 0x0033BA 00:F3AA: 9D 24 04  STA ram_0424_x_vel_frac,X                                  ; /
+C - - - - - 0x0033B7 00:F3A7: 9D 2D 04  STA ram_042D_x_vel_int_p1,X                                ; \ Set up Player X's X Velocity to $00
+C - - - - - 0x0033BA 00:F3AA: 9D 24 04  STA ram_0424_x_vel_frac_p1,X                               ; /
 bra_F3AD_RTS:
 C - - - - - 0x0033BD 00:F3AD: 60        RTS
 tbl_F3AE_Player_X_Spawn:
@@ -8548,7 +8549,7 @@ tbl_F3AE_Player_X_Spawn:
 - D 3 - - - 0x0033BF 00:F3AF: D0        .byte $D0   ; Player 2
 sub_F3B0_Init_Player_Type:
 C D 3 - - - 0x0033C0 00:F3B0: A9 03     LDA #$03                                                   ; \ Set Player X type to 03 (2 Balloons)
-C - - - - - 0x0033C2 00:F3B2: 9D 51 04  STA ram_0451_object_type,X                                 ; /
+C - - - - - 0x0033C2 00:F3B2: 9D 51 04  STA ram_0451_object_type_p1,X                              ; /
 C - - - - - 0x0033C5 00:F3B5: A9 02     LDA #$02                                                   ; \ Set Player X Balloons to 02
 C - - - - - 0x0033C7 00:F3B7: 95 88     STA ram_0088_object_balloons_p1,X                          ; /
 C - - - - - 0x0033C9 00:F3B9: 60        RTS
@@ -9342,8 +9343,8 @@ bra_F8DD:
 C - - - - - 0x0038ED 00:F8DD: 20 A5 F7  JSR sub_F7A5
 C - - - - - 0x0038F0 00:F8E0: A9 80     LDA #$80
 C - - - - - 0x0038F2 00:F8E2: 85 F4     STA ram_00F4
-C - - - - - 0x0038F4 00:F8E4: A9 02     LDA #$02
-C - - - - - 0x0038F6 00:F8E6: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x0038F4 00:F8E4: A9 02     LDA #$02                                                   ; \ Play Balloon Pop SFX
+C - - - - - 0x0038F6 00:F8E6: 85 F0     STA ram_00F0_sfx_1                                         ; /
 bra_F8E8:
 C - - - - - 0x0038F8 00:F8E8: A2 F9     LDX #< tbl_F6F9
 C - - - - - 0x0038FA 00:F8EA: A0 F6     LDY #> tbl_F6F9
@@ -9417,8 +9418,8 @@ C - - - - - 0x00396F 00:F95F: A2 D1     LDX #< tbl_F9D1
 C - - - - - 0x003971 00:F961: A0 F9     LDY #> tbl_F9D1
 C - - - - - 0x003973 00:F963: D0 2A     BNE bra_F98F
 bra_F965:
-C - - - - - 0x003975 00:F965: A9 02     LDA #$02
-C - - - - - 0x003977 00:F967: 85 F0     STA ram_00F0_sfx_1
+C - - - - - 0x003975 00:F965: A9 02     LDA #$02                                                   ; \ Play Balloon Pop SFX
+C - - - - - 0x003977 00:F967: 85 F0     STA ram_00F0_sfx_1                                         ; /
 C - - - - - 0x003979 00:F969: A5 F4     LDA ram_00F4
 C - - - - - 0x00397B 00:F96B: 29 0F     AND #$0F
 C - - - - - 0x00397D 00:F96D: 09 20     ORA #$20
